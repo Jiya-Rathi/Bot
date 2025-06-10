@@ -109,5 +109,5 @@ def extract_invoice_data(file_path):
     """Main entry point used by handler.py"""
     print(f"🔍 Extracting data from: {file_path}")
     raw_text = extract_text_with_ocr(file_path)
-    text = clean_text(raw_text)[:1500]
+    text = raw_text[:1000].split("T&C")[0]  
     return call_watsonx_invoice_parser(text)
