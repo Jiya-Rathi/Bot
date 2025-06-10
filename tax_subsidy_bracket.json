@@ -1,0 +1,229 @@
+{
+  "United States": {
+    "currency": "USD",
+    "brackets": [
+      { "min_income": 0, "max_income": 11000, "rate": 0.10 },
+      { "min_income": 11001, "max_income": 44725, "rate": 0.12 },
+      { "min_income": 44726, "max_income": 95375, "rate": 0.22 },
+      { "min_income": 95376, "max_income": null, "rate": 0.24 }
+    ],
+    "deductions": [
+      { "name": "Section 179 Expensing", "max_amount": 1050000 },
+      { "name": "Qualified Business Income Deduction", "percent": 0.20 }
+    ],
+    "subsidies": [
+      {
+        "name": "SBA 7(a) Loan Subsidy",
+        "description": "Interest rate subsidy up to 2.75% for eligible SMBs."
+      }
+    ]
+  },
+  "United Kingdom": {
+    "currency": "GBP",
+    "brackets": [
+      { "min_income": 0, "max_income": 10000, "rate": 0.05 },
+      { "min_income": 10001, "max_income": 21000, "rate": 0.15 },
+      { "min_income": 21001, "max_income": 43000, "rate": 0.20 },
+      { "min_income": 43001, "max_income": null, "rate": 0.30 }
+    ],
+    "deductions": [
+      { "name": "Allowance for Dwelling Renovations", "max_amount": 1000 },
+      { "name": "Allowance for Tools", "max_amount": 500 }
+    ],
+    "subsidies": [
+      { "name": "Business Rates Discount", "description": "Up to 100% rates relief on business properties." },
+      { "name": "Employer National Insurance Contributions", "description": "A reduction in National insurance contributions for employers." },
+      { "name": "VAT Flat Rate Scheme", "description": "Flat rate scheme to help small businesses." }
+    ]
+  },
+  "Canada": {
+    "currency": "CAD",
+    "brackets": [
+      { "min_income": 0, "max_income": 65000, "rate": 0.1325 },
+      { "min_income": 65001, "max_income": 140000, "rate": 0.1925 },
+      { "min_income": 140001, "max_income": 275000, "rate": 0.2925 },
+      { "min_income": 275001, "max_income": 445500, "rate": 0.3925 }
+    ],
+    "deductions": [
+      { "name": "Canada Workers Benefit", "max_amount": 2000 },
+      { "name": "RRSP Deduction Limit", "max_amount": 18000 },
+      { "name": "Medical Expense Deduction", "max_amount": 300 }
+    ],
+    "subsidies": [
+      {
+        "name": "Small business contingency fund for provinces and territories",
+        "description": "Provides up to $5M/province/year in contingent funding for SMBs experiencing hardship as a result of COVID-19."
+      },
+      {
+        "name": "Canada emergency wage subsidy (CEWS)",
+        "description": "A temporary CEWS of 75% of employee salaries paid by employers to eligible employees during the COVID-19 pandemic."
+      },
+      {
+        "name": "Canada emergency rent subsidy (CERS)",
+        "description": "A temporary CERS of 65% of rent for qualifying small businesses, nonprofits, and charities retroactive to March 17, 2020."
+      },
+      {
+        "name": "Employment Insurance sickness benefit reform measures",
+        "description": "Extends the maximum duration of Employment Insurance sickness benefits from 15 weeks to 26 weeks."
+      }
+    ]
+  },
+  "Australia": {
+    "currency": "AUD",
+    "brackets": [
+      { "min_income": 0, "max_income": 18000, "rate": 0.05 },
+      { "min_income": 18001, "max_income": 41600, "rate": 0.06 },
+      { "min_income": 41601, "max_income": 85500, "rate": 0.08 },
+      { "min_income": 85501, "max_income": 100000, "rate": 0.11 }
+    ],
+    "deductions": [
+      { "name": "Uniform And Equipment Allowance", "max_amount": 60000 },
+      { "name": "Medical Expense Deduction", "rate": 0.10 }
+    ],
+    "subsidies": [
+      {
+        "name": "Small business instant asset write-off",
+        "description": "Allows small businesses to immediately deduct the cost of eligible assets."
+      }
+    ]
+  },
+  "Singapore": {
+    "currency": "SGD",
+    "brackets": [
+      { "min_income": 0, "max_income": 20000, "rate": 0.0 },
+      { "min_income": 20001, "max_income": 30000, "rate": 0.02 },
+      { "min_income": 30001, "max_income": 40000, "rate": 0.035 },
+      { "min_income": 40001, "max_income": 80000, "rate": 0.07 }
+    ],
+    "deductions": [
+      { "name": "Medisave Account", "max_amount": 10000, "rate": 0.1075 },
+      { "name": "Employment Bonus", "rate": 0.12 },
+      { "name": "Personal Relief", "rate": 0.05 }
+    ],
+    "subsidies": [
+      {
+        "name": "Productivity and Innovation Credit (PIC)",
+        "description": "Tax incentives for qualifying activities and investments."
+      },
+      {
+        "name": "SME Cash Grant",
+        "description": "Cash grants for small and medium enterprises to support business growth."
+      }
+    ]
+  },
+  "Germany": {
+    "currency": "EUR",
+    "brackets": [
+      { "min_income": 0, "max_income": 9984, "rate": 0.0 },
+      { "min_income": 9985, "max_income": 58596, "rate": 0.14 },
+      { "min_income": 58597, "max_income": 277825, "rate": 0.42 },
+      { "min_income": 277826, "max_income": null, "rate": 0.45 }
+    ],
+    "deductions": [
+      { "name": "Business Expenses", "max_amount": 4500 },
+      { "name": "Professional Development", "max_amount": 2000 }
+    ],
+    "subsidies": [
+      {
+        "name": "KfW Bank subsidy",
+        "description": "Subsidy paid by German state-owned development bank to encourage lending to small business; interest rate subsidy, repayable if loan goes into default."
+      }
+    ]
+  },
+  "France": {
+    "currency": "EUR",
+    "brackets": [
+      { "min_income": 0, "max_income": 10777, "rate": 0.0 },
+      { "min_income": 10778, "max_income": 27478, "rate": 0.11 },
+      { "min_income": 27479, "max_income": 78570, "rate": 0.30 },
+      { "min_income": 78571, "max_income": null, "rate": 0.41 }
+    ],
+    "deductions": [
+      { "name": "Housing allowance - rent or mortgage interest", "rate": 0.20, "max_amount": 4000 },
+      { "name": "Professional expenses", "max_amount": 2000 }
+    ],
+    "subsidies": [
+      {
+        "name": "SME working capital loan subsidy scheme SCPCE",
+        "description": "Subsidized working capital loans for SMEs."
+      },
+      {
+        "name": "Prime minister's entrepreneurship plan",
+        "description": "Subsidized microcredits for start-ups and young entrepreneurs to finance business projects."
+      }
+    ]
+  },
+  "India": {
+    "currency": "INR",
+    "brackets": [
+      { "min_income": 0, "max_income": 250000, "rate": 0.0 },
+      { "min_income": 250001, "max_income": 500000, "rate": 0.05 },
+      { "min_income": 500001, "max_income": 1000000, "rate": 0.20 },
+      { "min_income": 1000001, "max_income": null, "rate": 0.30 }
+    ],
+    "deductions": [
+      { "name": "Standard Deduction", "max_amount": 50000 },
+      { "name": "Professional Tax", "max_amount": 2500 }
+    ],
+    "subsidies": [
+      {
+        "name": "Startup India Initiative",
+        "description": "Tax exemptions and incentives for eligible startups for the first three years."
+      },
+      {
+        "name": "MSME Credit Guarantee Scheme",
+        "description": "Collateral-free loans up to Rs 2 crore for micro, small and medium enterprises."
+      }
+    ]
+  },
+  "Japan": {
+    "currency": "JPY",
+    "brackets": [
+      { "min_income": 0, "max_income": 1950000, "rate": 0.05 },
+      { "min_income": 1950001, "max_income": 3300000, "rate": 0.10 },
+      { "min_income": 3300001, "max_income": 6950000, "rate": 0.20 },
+      { "min_income": 6950001, "max_income": null, "rate": 0.23 }
+    ],
+    "deductions": [
+      { "name": "Basic Deduction", "max_amount": 480000 },
+      { "name": "Employment Income Deduction", "max_amount": 1950000 }
+    ],
+    "subsidies": [
+      {
+        "name": "Small and Medium Enterprise Tax Credits",
+        "description": "Reduced corporate tax rates for qualifying small and medium enterprises."
+      },
+      {
+        "name": "R&D Tax Credit",
+        "description": "Tax credits for research and development expenses incurred by SMEs."
+      }
+    ]
+  },
+  "Brazil": {
+    "currency": "BRL",
+    "brackets": [
+      { "min_income": 0, "max_income": 22847, "rate": 0.0 },
+      { "min_income": 22848, "max_income": 33919, "rate": 0.075 },
+      { "min_income": 33920, "max_income": 45012, "rate": 0.15 },
+      { "min_income": 45013, "max_income": null, "rate": 0.225 }
+    ],
+    "deductions": [
+      { "name": "Business meal and entertainment expenses", "max_amount": 20000 },
+      { "name": "Social security contribution", "rate": 0.08 }
+    ],
+    "subsidies": [
+      {
+        "name": "Simples Nacional",
+        "description": "Simplified tax regime for micro and small enterprises with reduced tax rates."
+      },
+      {
+        "name": "BNDES Credit Lines",
+        "description": "Subsidized credit lines from the national development bank for SME working capital and investment."
+      },
+      {
+        "name": "Microentrepreneur Individual (MEI)",
+        "description": "Special tax regime for individual microentrepreneurs with fixed monthly tax payments."
+      }
+    ]
+  }
+}

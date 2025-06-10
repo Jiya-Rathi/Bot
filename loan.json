@@ -1,0 +1,871 @@
+{
+  "singapore": [
+    {
+      "loan_name": "SME Working Capital Loan",
+      "bank_name": "United Overseas Bank (UOB)",
+      "interest_rate": "6.98-8.5% variable",
+      "max_amount": "SGD $500,000",
+      "min_amount": "SGD $10,000",
+      "tenure": "3 years",
+      "eligibility_criteria": "Singapore-incorporated company, minimum 2 years in business, UOB banking relationship required",
+      "documentation_required": [
+        "UOB account statements (last 6 months)",
+        "Financial statements",
+        "Director's payslips",
+        "Business registration documents"
+      ],
+      "application_process": "Apply via UOB Business Internet Banking or visit branch",
+      "collateral_required": "Personal guarantee and/or company assets, property valuation may be required",
+      "last_updated": "2025-06-07"
+    },
+    {
+      "loan_name": "Business Term Loan",
+      "bank_name": "DBS Bank",
+      "interest_rate": "7.0-9.5% variable",
+      "max_amount": "SGD $500,000",
+      "min_amount": "SGD $30,000",
+      "tenure": "5 years",
+      "eligibility_criteria": "Singapore-incorporated company, minimum 3 years operation, DBS business account holder, Singapore citizen/PR director",
+      "documentation_required": [
+        "Audited financial statements",
+        "Business registration",
+        "Tax assessments",
+        "Bank statements",
+        "Business plan"
+      ],
+      "application_process": "Apply online through DBS iBanking or visit business banking center",
+      "collateral_required": "May require business assets or personal guarantee for larger amounts",
+      "last_updated": "2025-06-07"
+    },
+    {
+      "loan_name": "Enterprise Financing Scheme - SME Working Capital",
+      "bank_name": "OCBC Bank (via Enterprise Singapore)",
+      "interest_rate": "5.5-7.5% variable",
+      "max_amount": "SGD $500,000",
+      "min_amount": "SGD $20,000",
+      "tenure": "5 years",
+      "eligibility_criteria": "Local shareholding ≥30%, annual sales turnover ≤SGD $100M, government risk-sharing up to 70%",
+      "documentation_required": [
+        "ACRA business profile",
+        "Financial statements",
+        "Bank statements",
+        "Directors' particulars",
+        "Project proposal"
+      ],
+      "application_process": "Apply through OCBC business banking with Enterprise Singapore endorsement",
+      "collateral_required": "Reduced collateral requirements due to government risk-sharing",
+      "last_updated": "2025-06-07"
+    },
+    {
+      "loan_name": "SME Business Loan",
+      "bank_name": "Maybank Singapore",
+      "interest_rate": "7.18-9.25% variable",
+      "max_amount": "SGD $300,000",
+      "min_amount": "SGD $50,000",
+      "tenure": "3 years",
+      "eligibility_criteria": "Minimum 3 years operation, Maybank account holder, Singapore citizen/PR director, annual turnover ≤SGD $100M",
+      "documentation_required": [
+        "Audited financial statements (2 years)",
+        "Tax assessments",
+        "Bank statements",
+        "Directors' identification",
+        "Utility bills"
+      ],
+      "application_process": "Apply at Maybank branch or call business hotline during office hours",
+      "collateral_required": "Personal guarantee typically required, additional security for larger amounts",
+      "last_updated": "2025-06-07"
+    },
+    {
+      "loan_name": "Sustainability-Linked SME Financing",
+      "bank_name": "CIMB Bank Singapore",
+      "interest_rate": "6.5-8.5% variable (with 0.2% rebate for sustainability targets)",
+      "max_amount": "SGD $250,000",
+      "min_amount": "SGD $25,000",
+      "tenure": "3 years",
+      "eligibility_criteria": "Singapore-incorporated SME, commitment to sustainability performance targets (SPTs)",
+      "documentation_required": [
+        "Financial statements",
+        "Business registration",
+        "Sustainability plan",
+        "Performance metrics"
+      ],
+      "application_process": "Apply through CIMB business banking with Bureau Veritas verification",
+      "collateral_required": "Business assets or personal guarantee may be required",
+      "last_updated": "2025-06-07"
+    },
+    {
+      "loan_name": "Trade Finance Loan",
+      "bank_name": "Standard Chartered Singapore",
+      "interest_rate": "5.8-7.8% variable",
+      "max_amount": "SGD $1,000,000",
+      "min_amount": "SGD $50,000",
+      "tenure": "2 years",
+      "eligibility_criteria": "Import/export businesses, established trade relationships, Singapore-incorporated company",
+      "documentation_required": [
+        "Trade documents",
+        "Financial statements",
+        "Import/export licenses",
+        "Purchase orders"
+      ],
+      "application_process": "Apply through Standard Chartered trade finance team",
+      "collateral_required": "Trade receivables or inventory as collateral",
+      "last_updated": "2025-06-07"
+    },
+    {
+      "loan_name": "SME Growth Loan",
+      "bank_name": "HSBC Singapore",
+      "interest_rate": "6.75-9.0% variable",
+      "max_amount": "SGD $750,000",
+      "min_amount": "SGD $40,000",
+      "tenure": "7 years",
+      "eligibility_criteria": "Minimum 2 years in business, HSBC relationship, growth or expansion projects",
+      "documentation_required": [
+        "Business plan",
+        "Financial projections",
+        "Historical financials",
+        "Management accounts"
+      ],
+      "application_process": "Apply through HSBC business relationship manager",
+      "collateral_required": "Business assets, property, or personal guarantee",
+      "last_updated": "2025-06-07"
+    }
+  ],
+  "united_states": [
+    {
+      "loan_name": "SBA 7(a) Loan",
+      "bank_name": "Wells Fargo",
+      "interest_rate": "6.5% variable",
+      "max_amount": "$5,000,000",
+      "min_amount": "$30,000",
+      "tenure": "10 years",
+      "eligibility_criteria": "U.S.-based, for-profit businesses with reasonable owner equity investment",
+      "documentation_required": [
+        "Business plan",
+        "Tax returns",
+        "Financial statements",
+        "Personal background"
+      ],
+      "application_process": "Apply via SBA-partner bank, followed by underwriting and SBA approval",
+      "collateral_required": "Yes, for loans over $25,000",
+      "last_updated": "2025-06-01"
+    },
+    {
+      "loan_name": "SBA Microloan",
+      "bank_name": "Accion Opportunity Fund",
+      "interest_rate": "8% fixed",
+      "max_amount": "$50,000",
+      "min_amount": "$500",
+      "tenure": "6 years",
+      "eligibility_criteria": "Startups or small businesses in underserved communities",
+      "documentation_required": [
+        "Business license",
+        "Tax ID",
+        "Bank statements"
+      ],
+      "application_process": "Apply directly through CDFIs or SBA microloan lenders",
+      "collateral_required": "Sometimes, personal guarantee may be required",
+      "last_updated": "2025-06-01"
+    },
+    {
+      "loan_name": "Business Advantage Credit Line",
+      "bank_name": "Bank of America",
+      "interest_rate": "9.75% variable",
+      "max_amount": "$250,000",
+      "min_amount": "$10,000",
+      "tenure": "Revolving credit",
+      "eligibility_criteria": "Minimum 2 years in business, $100,000 annual revenue",
+      "documentation_required": [
+        "Bank statements",
+        "Business tax returns",
+        "Business license"
+      ],
+      "application_process": "Online application with document upload and credit check",
+      "collateral_required": "No",
+      "last_updated": "2025-06-01"
+    },
+    {
+      "loan_name": "SmartBiz SBA Loan",
+      "bank_name": "SmartBiz (SBA Marketplace Lender)",
+      "interest_rate": "6.25% fixed",
+      "max_amount": "$350,000",
+      "min_amount": "$30,000",
+      "tenure": "10 years",
+      "eligibility_criteria": "For-profit U.S. businesses, 2+ years in operation, good credit history",
+      "documentation_required": [
+        "Financial statements",
+        "Business plan",
+        "Tax documents"
+      ],
+      "application_process": "Online prequalification, documentation, SBA matching",
+      "collateral_required": "Yes, for loans above $25,000",
+      "last_updated": "2025-06-01"
+    },
+    {
+      "loan_name": "Chase Business Term Loan",
+      "bank_name": "JPMorgan Chase",
+      "interest_rate": "7.99% fixed",
+      "max_amount": "$500,000",
+      "min_amount": "$5,000",
+      "tenure": "1 to 7 years",
+      "eligibility_criteria": "Established businesses with Chase relationship",
+      "documentation_required": [
+        "Business tax returns",
+        "Bank statements",
+        "Articles of incorporation"
+      ],
+      "application_process": "Apply via Chase banker or online account",
+      "collateral_required": "Yes, varies by loan amount",
+      "last_updated": "2025-06-01"
+    }
+  ],
+  "united_kingdom": [
+    {
+      "loan_name": "Start Up Loan",
+      "bank_name": "British Business Bank",
+      "interest_rate": "6% fixed",
+      "max_amount": "£25,000",
+      "min_amount": "£500",
+      "tenure": "5 years",
+      "eligibility_criteria": "New businesses or those trading for less than 24 months, UK residents",
+      "documentation_required": [
+        "Business plan",
+        "Financial projections",
+        "ID documents"
+      ],
+      "application_process": "Apply through accredited delivery partners, includes mentorship support",
+      "collateral_required": "No, but personal guarantee required",
+      "last_updated": "2025-06-07"
+    },
+    {
+      "loan_name": "Growth Guarantee Scheme",
+      "bank_name": "Various UK Banks",
+      "interest_rate": "7-13% variable",
+      "max_amount": "£2,000,000",
+      "min_amount": "£25,000",
+      "tenure": "10 years",
+      "eligibility_criteria": "UK-based SMEs, viable business proposition, 80% government guarantee",
+      "documentation_required": [
+        "Business plan",
+        "Financial statements",
+        "Management accounts"
+      ],
+      "application_process": "Apply through participating lenders with government backing",
+      "collateral_required": "Reduced requirements due to government guarantee",
+      "last_updated": "2025-06-07"
+    },
+    {
+      "loan_name": "Business Term Loan",
+      "bank_name": "Barclays",
+      "interest_rate": "8.5-12% variable",
+      "max_amount": "£500,000",
+      "min_amount": "£5,000",
+      "tenure": "7 years",
+      "eligibility_criteria": "Established businesses with 2+ years trading history",
+      "documentation_required": [
+        "Business accounts",
+        "Bank statements",
+        "Business plan"
+      ],
+      "application_process": "Online application with relationship manager support",
+      "collateral_required": "Yes, varies by amount",
+      "last_updated": "2025-06-07"
+    },
+    {
+      "loan_name": "SME Business Loan",
+      "bank_name": "HSBC UK",
+      "interest_rate": "6.9-11.9% variable",
+      "max_amount": "£250,000",
+      "min_amount": "£10,000",
+      "tenure": "5 years",
+      "eligibility_criteria": "UK registered companies, minimum 2 years trading",
+      "documentation_required": [
+        "Latest accounts",
+        "Management information",
+        "Directors' details"
+      ],
+      "application_process": "Branch or online application with business banking relationship",
+      "collateral_required": "May be required for larger amounts",
+      "last_updated": "2025-06-07"
+    },
+    {
+      "loan_name": "Flexi-Loan",
+      "bank_name": "Santander UK",
+      "interest_rate": "9.75% variable",
+      "max_amount": "£150,000",
+      "min_amount": "£5,000",
+      "tenure": "Revolving facility",
+      "eligibility_criteria": "Established UK businesses with existing banking relationship",
+      "documentation_required": [
+        "Trading history",
+        "Financial statements",
+        "Credit checks"
+      ],
+      "application_process": "Apply through business banking team",
+      "collateral_required": "Personal guarantee may be required",
+      "last_updated": "2025-06-07"
+    }
+  ],
+  "canada": [
+    {
+      "loan_name": "BDC Small Business Loan",
+      "bank_name": "Business Development Bank of Canada",
+      "interest_rate": "Variable (Prime + margin)",
+      "max_amount": "CAD $100,000",
+      "min_amount": "CAD $5,000",
+      "tenure": "5 years",
+      "eligibility_criteria": "Canadian businesses, viable business plan, adequate cash flow",
+      "documentation_required": [
+        "Business plan",
+        "Financial statements",
+        "Personal net worth"
+      ],
+      "application_process": "Online application with BDC advisor consultation",
+      "collateral_required": "May be required, personal guarantee typical",
+      "last_updated": "2025-06-07"
+    },
+    {
+      "loan_name": "Canada Small Business Financing Loan (CSBFL)",
+      "bank_name": "RBC Royal Bank",
+      "interest_rate": "Prime + 1.25% administration fee",
+      "max_amount": "CAD $1,000,000",
+      "min_amount": "CAD $5,000",
+      "tenure": "10 years",
+      "eligibility_criteria": "Canadian small businesses, maximum $10M annual revenue",
+      "documentation_required": [
+        "Business registration",
+        "Financial statements",
+        "Asset documentation"
+      ],
+      "application_process": "Apply through participating financial institutions",
+      "collateral_required": "Assets being financed serve as collateral",
+      "last_updated": "2025-06-07"
+    },
+    {
+      "loan_name": "ScotiaLine for Business",
+      "bank_name": "Scotiabank",
+      "interest_rate": "Prime + 0.5-3%",
+      "max_amount": "CAD $250,000",
+      "min_amount": "CAD $10,000",
+      "tenure": "Revolving credit line",
+      "eligibility_criteria": "Established Canadian businesses, good credit history",
+      "documentation_required": [
+        "Business financial statements",
+        "Personal financial information"
+      ],
+      "application_process": "Branch application with business banking advisor",
+      "collateral_required": "May require business assets or personal guarantee",
+      "last_updated": "2025-06-07"
+    },
+    {
+      "loan_name": "TD Business Term Loan",
+      "bank_name": "TD Bank",
+      "interest_rate": "5.5-8.5% variable",
+      "max_amount": "CAD $500,000",
+      "min_amount": "CAD $25,000",
+      "tenure": "7 years",
+      "eligibility_criteria": "Canadian incorporated businesses, minimum 2 years operation",
+      "documentation_required": [
+        "Corporate documents",
+        "Financial statements",
+        "Business plan"
+      ],
+      "application_process": "Meet with business advisor for application review",
+      "collateral_required": "Security may be required based on loan amount",
+      "last_updated": "2025-06-07"
+    },
+    {
+      "loan_name": "BMO Business Loan",
+      "bank_name": "Bank of Montreal",
+      "interest_rate": "Prime + margin",
+      "max_amount": "CAD $350,000",
+      "min_amount": "CAD $15,000",
+      "tenure": "5 years",
+      "eligibility_criteria": "Canadian businesses with established banking relationship",
+      "documentation_required": [
+        "Business license",
+        "Tax returns",
+        "Financial projections"
+      ],
+      "application_process": "Apply through BMO business banking center",
+      "collateral_required": "Varies by loan amount and business profile",
+      "last_updated": "2025-06-07"
+    }
+  ],
+  "india": [
+    {
+      "loan_name": "MUDRA Loan - Shishu",
+      "bank_name": "State Bank of India",
+      "interest_rate": "8.5-12% variable",
+      "max_amount": "₹50,000",
+      "min_amount": "₹1,000",
+      "tenure": "5 years",
+      "eligibility_criteria": "Non-corporate, non-farm SME/micro enterprises",
+      "documentation_required": [
+        "Aadhaar card",
+        "PAN card",
+        "Bank statements",
+        "Business registration"
+      ],
+      "application_process": "Apply at SBI branch or online portal",
+      "collateral_required": "No collateral required",
+      "last_updated": "2025-06-07"
+    },
+    {
+      "loan_name": "MSME Business Loan",
+      "bank_name": "HDFC Bank",
+      "interest_rate": "9.75-18% variable",
+      "max_amount": "₹75,00,000",
+      "min_amount": "₹50,000",
+      "tenure": "7 years",
+      "eligibility_criteria": "Manufacturing/Service enterprises, 3+ years in business",
+      "documentation_required": [
+        "GST registration",
+        "ITR",
+        "Financial statements",
+        "Project report"
+      ],
+      "application_process": "Online application with document upload and verification",
+      "collateral_required": "Required for loans above ₹25 lakh",
+      "last_updated": "2025-06-07"
+    },
+    {
+      "loan_name": "Credit Guarantee Fund Trust",
+      "bank_name": "Bank of Baroda",
+      "interest_rate": "8.9-14% variable",
+      "max_amount": "₹2,00,00,000",
+      "min_amount": "₹1,00,000",
+      "tenure": "7 years",
+      "eligibility_criteria": "MSMEs, collateral-free loans with CGTMSE guarantee",
+      "documentation_required": [
+        "Udyog Aadhaar",
+        "Project report",
+        "Financial documents"
+      ],
+      "application_process": "Apply through Bank of Baroda MSME branch",
+      "collateral_required": "No collateral for loans up to ₹2 crore",
+      "last_updated": "2025-06-07"
+    },
+    {
+      "loan_name": "Stand-Up India Loan",
+      "bank_name": "ICICI Bank",
+      "interest_rate": "Base rate + 3-4%",
+      "max_amount": "₹1,00,00,000",
+      "min_amount": "₹10,00,000",
+      "tenure": "7 years",
+      "eligibility_criteria": "SC/ST/Women entrepreneurs, greenfield enterprises",
+      "documentation_required": [
+        "Category certificate",
+        "Project report",
+        "Land documents"
+      ],
+      "application_process": "Apply through ICICI Bank branch with Stand-Up India portal",
+      "collateral_required": "Primary security of project assets",
+      "last_updated": "2025-06-07"
+    },
+    {
+      "loan_name": "ECLGS Loan",
+      "bank_name": "Axis Bank",
+      "interest_rate": "9.25-13% variable",
+      "max_amount": "₹50,00,000",
+      "min_amount": "₹1,00,000",
+      "tenure": "6 years",
+      "eligibility_criteria": "MSMEs affected by COVID-19, operational as of Feb 2020",
+      "documentation_required": [
+        "GST returns",
+        "Bank statements",
+        "Audited financials"
+      ],
+      "application_process": "Online application through Axis Bank MSME portal",
+      "collateral_required": "No additional collateral required",
+      "last_updated": "2025-06-07"
+    }
+  ],
+  "brazil": [
+    {
+      "loan_name": "BNDES Automático",
+      "bank_name": "Banco Nacional de Desenvolvimento",
+      "interest_rate": "TJLP + 2-4%",
+      "max_amount": "R$ 20,000,000",
+      "min_amount": "R$ 90,000",
+      "tenure": "8 years",
+      "eligibility_criteria": "Brazilian companies, investment projects, job creation",
+      "documentation_required": [
+        "CNPJ registration",
+        "Financial statements",
+        "Project documentation"
+      ],
+      "application_process": "Apply through accredited financial institutions",
+      "collateral_required": "Real guarantees required for larger amounts",
+      "last_updated": "2025-06-07"
+    },
+    {
+      "loan_name": "Pronampe",
+      "bank_name": "Banco do Brasil",
+      "interest_rate": "Selic + 1.25%",
+      "max_amount": "R$ 150,000",
+      "min_amount": "R$ 5,000",
+      "tenure": "4 years",
+      "eligibility_criteria": "Micro and small enterprises, revenue up to R$4.8M",
+      "documentation_required": [
+        "CNPJ",
+        "Tax compliance certificates",
+        "Revenue proof"
+      ],
+      "application_process": "Apply through Banco do Brasil digital channels",
+      "collateral_required": "No collateral, government guarantee coverage",
+      "last_updated": "2025-06-07"
+    },
+    {
+      "loan_name": "Capital de Giro",
+      "bank_name": "Itaú Unibanco",
+      "interest_rate": "12-18% annual",
+      "max_amount": "R$ 500,000",
+      "min_amount": "R$ 10,000",
+      "tenure": "2 years",
+      "eligibility_criteria": "Active companies with banking relationship, good credit history",
+      "documentation_required": [
+        "Corporate documents",
+        "Financial statements",
+        "Billing proof"
+      ],
+      "application_process": "Apply through Itaú business banking or app",
+      "collateral_required": "May require personal guarantee or assets",
+      "last_updated": "2025-06-07"
+    },
+    {
+      "loan_name": "Santander Negócios",
+      "bank_name": "Santander Brasil",
+      "interest_rate": "14-22% annual",
+      "max_amount": "R$ 300,000",
+      "min_amount": "R$ 15,000",
+      "tenure": "5 years",
+      "eligibility_criteria": "Small and medium enterprises, minimum 1 year operation",
+      "documentation_required": [
+        "CNPJ",
+        "Bank statements",
+        "Tax documents"
+      ],
+      "application_process": "Online application through Santander business portal",
+      "collateral_required": "Personal guarantee typically required",
+      "last_updated": "2025-06-07"
+    },
+    {
+      "loan_name": "FGI Peac",
+      "bank_name": "Caixa Econômica Federal",
+      "interest_rate": "8-14% annual",
+      "max_amount": "R$ 100,000",
+      "min_amount": "R$ 3,000",
+      "tenure": "5 years",
+      "eligibility_criteria": "Small businesses, entrepreneurs affected by economic crisis",
+      "documentation_required": [
+        "CPF/CNPJ",
+        "Income proof",
+        "Business plan"
+      ],
+      "application_process": "Apply at Caixa branches or authorized correspondents",
+      "collateral_required": "No collateral, covered by guarantee fund",
+      "last_updated": "2025-06-07"
+    }
+  ],
+  "australia": [
+    {
+      "loan_name": "Business Term Loan",
+      "bank_name": "Commonwealth Bank of Australia",
+      "interest_rate": "5.75-8.95% variable",
+      "max_amount": "AUD $2,000,000",
+      "min_amount": "AUD $10,000",
+      "tenure": "7 years",
+      "eligibility_criteria": "Australian registered business, minimum 2 years trading history",
+      "documentation_required": [
+        "Business registration",
+        "Financial statements",
+        "Tax returns",
+        "Business plan"
+      ],
+      "application_process": "Apply online or through business banking manager",
+      "collateral_required": "Security may be required depending on loan amount",
+      "last_updated": "2025-06-07"
+    },
+    {
+      "loan_name": "ANZ Business Loan",
+      "bank_name": "Australia and New Zealand Banking Group",
+      "interest_rate": "6.25-9.50% variable",
+      "max_amount": "AUD $1,500,000",
+      "min_amount": "AUD $25,000",
+      "tenure": "10 years",
+      "eligibility_criteria": "Established Australian businesses with good credit history",
+      "documentation_required": [
+        "Company financials",
+        "Directors' information",
+        "Security documents"
+      ],
+      "application_process": "Apply through ANZ business banking or online portal",
+      "collateral_required": "First class security meeting ANZ requirements",
+      "last_updated": "2025-06-07"
+    },
+    {
+      "loan_name": "NAB Business Loan",
+      "bank_name": "National Australia Bank",
+      "interest_rate": "5.99-10.25% variable",
+      "max_amount": "AUD $1,000,000",
+      "min_amount": "AUD $15,000",
+      "tenure": "5 years",
+      "eligibility_criteria": "Australian businesses with established banking relationship",
+      "documentation_required": [
+        "Business activity statements",
+        "Financial records",
+        "Asset documentation"
+      ],
+      "application_process": "Apply through NAB business specialist or online",
+      "collateral_required": "Security requirements vary by loan size",
+      "last_updated": "2025-06-07"
+    },
+    {
+      "loan_name": "Westpac Business Loan",
+      "bank_name": "Westpac Banking Corporation",
+      "interest_rate": "6.45-9.75% variable",
+      "max_amount": "AUD $750,000",
+      "min_amount": "AUD $20,000",
+      "tenure": "7 years",
+      "eligibility_criteria": "Australian registered companies, minimum 2 years operation",
+      "documentation_required": [
+        "Profit and loss statements",
+        "Balance sheets",
+        "Cash flow projections"
+      ],
+      "application_process": "Apply online or at Westpac business banking center",
+      "collateral_required": "Business assets or property may be required",
+      "last_updated": "2025-06-07"
+    },
+    {
+      "loan_name": "Equipment Finance",
+      "bank_name": "Macquarie Bank",
+      "interest_rate": "7.50-12.00% fixed",
+      "max_amount": "AUD $500,000",
+      "min_amount": "AUD $5,000",
+      "tenure": "5 years",
+      "eligibility_criteria": "SMEs purchasing business equipment or vehicles",
+      "documentation_required": [
+        "Equipment quotes",
+        "Financial statements",
+        "Business registration"
+      ],
+      "application_process": "Online application with quick approval process",
+      "collateral_required": "Equipment being financed serves as security",
+      "last_updated": "2025-06-07"
+    }
+  ],
+  "france": [
+    {
+      "loan_name": "Prêt de Développement",
+      "bank_name": "Bpifrance",
+      "interest_rate": "2.50-4.50% fixed",
+      "max_amount": "€5,000,000",
+      "min_amount": "€40,000",
+      "tenure": "7 years",
+      "eligibility_criteria": "French SMEs, innovation or development projects, co-financing required",
+      "documentation_required": [
+        "Business plan",
+        "Financial statements",
+        "Project documentation"
+      ],
+      "application_process": "Apply through partner banks with Bpifrance guarantee",
+      "collateral_required": "Shared risk with partner bank",
+      "last_updated": "2025-06-07"
+    },
+    {
+      "loan_name": "Crédit Professionnel",
+      "bank_name": "BNP Paribas",
+      "interest_rate": "3.25-6.75% variable",
+      "max_amount": "€2,000,000",
+      "min_amount": "€15,000",
+      "tenure": "7 years",
+      "eligibility_criteria": "French registered businesses, minimum 2 years trading",
+      "documentation_required": [
+        "Kbis extract",
+        "Tax declarations",
+        "Financial statements"
+      ],
+      "application_process": "Apply through BNP Paribas business advisor",
+      "collateral_required": "Personal or business guarantees may be required",
+      "last_updated": "2025-06-07"
+    },
+    {
+      "loan_name": "Crédit Agricole Pro",
+      "bank_name": "Crédit Agricole",
+      "interest_rate": "2.95-5.95% variable",
+      "max_amount": "€1,500,000",
+      "min_amount": "€10,000",
+      "tenure": "8 years",
+      "eligibility_criteria": "French businesses, established banking relationship preferred",
+      "documentation_required": [
+        "Company registration",
+        "Recent accounts",
+        "Business plan"
+      ],
+      "application_process": "Apply at local Crédit Agricole branch",
+      "collateral_required": "Security requirements based on loan amount",
+      "last_updated": "2025-06-07"
+    },
+    {
+      "loan_name": "Société Générale Entreprises",
+      "bank_name": "Société Générale",
+      "interest_rate": "3.50-7.25% variable",
+      "max_amount": "€1,000,000",
+        "min_amount": "€20,000",
+      "tenure": "6 years",
+      "eligibility_criteria": "French SMEs with viable business model",
+      "documentation_required": ["Statutory accounts", "Management accounts", "Forecasts"],
+      "application_process": "Apply through business relationship manager",
+      "collateral_required": "Business assets or personal guarantees",
+      "last_updated": "2025-06-07"
+    },
+    {
+      "loan_name": "Prêt Garanti par l'État (PGE)",
+      "bank_name": "Various French Banks",
+      "interest_rate": "1.50-3.50% fixed",
+      "max_amount": "€300,000",
+      "min_amount": "€10,000",
+      "tenure": "6 years",
+      "eligibility_criteria": "French companies affected by economic difficulties",
+      "documentation_required": ["Company registration", "Financial statements", "Impact declaration"],
+      "application_process": "Apply through participating banks with state guarantee",
+      "collateral_required": "No additional collateral due to state guarantee",
+      "last_updated": "2025-06-07"
+    }
+  ],
+  "Germany": [
+    {
+      "loan_name": "KfW-Unternehmerkredit",
+      "bank_name": "Kreditanstalt für Wiederaufbau (KfW)",
+      "interest_rate": "2.15-4.85% fixed",
+      "max_amount": "€25,000,000",
+      "min_amount": "€25,000",
+      "tenure": "20 years",
+      "eligibility_criteria": "German SMEs, investment projects, innovation financing",
+      "documentation_required": ["Business plan", "Financial statements", "Investment documentation"],
+      "application_process": "Apply through house bank (Hausbank) with KfW guarantee",
+      "collateral_required": "Collateral shared between house bank and KfW",
+      "last_updated": "2025-06-07"
+    },
+    {
+      "loan_name": "Deutsche Bank Geschäftskredit",
+      "bank_name": "Deutsche Bank",
+      "interest_rate": "4.50-8.25% variable",
+      "max_amount": "€5,000,000",
+      "min_amount": "€50,000",
+      "tenure": "10 years",
+      "eligibility_criteria": "German companies with established business relationship",
+      "documentation_required": ["Annual financial statements", "Business license", "Management reports"],
+      "application_process": "Apply through corporate banking advisor",
+      "collateral_required": "Business assets or real estate security",
+      "last_updated": "2025-06-07"
+    },
+    {
+      "loan_name": "Commerzbank Mittelstandskredit",
+      "bank_name": "Commerzbank",
+      "interest_rate": "3.95-7.50% variable",
+      "max_amount": "€3,000,000",
+      "min_amount": "€30,000",
+      "tenure": "8 years",
+      "eligibility_criteria": "German Mittelstand companies, minimum 3 years operation",
+      "documentation_required": ["BWA (business evaluation)", "Tax assessments", "Company registration"],
+      "application_process": "Apply through Mittelstand banking specialist",
+      "collateral_required": "Adequate security required for larger amounts",
+      "last_updated": "2025-06-07"
+    },
+    {
+      "loan_name": "Sparkassen-Betriebsmittelkredit",
+      "bank_name": "Sparkassen (Savings Banks)",
+      "interest_rate": "4.25-9.75% variable",
+      "max_amount": "€500,000",
+      "min_amount": "€10,000",
+      "tenure": "5 years",
+      "eligibility_criteria": "Local German businesses, strong regional presence",
+      "documentation_required": ["Profit and loss statements", "Business registration", "SCHUFA credit check"],
+      "application_process": "Apply at local Sparkasse branch",
+      "collateral_required": "Business or personal guarantees typically required",
+      "last_updated": "2025-06-07"
+    },
+    {
+      "loan_name": "DZ Bank Gewerbekredit",
+      "bank_name": "DZ Bank (Cooperative Banks)",
+      "interest_rate": "3.75-6.95% variable",
+      "max_amount": "€2,000,000",
+      "min_amount": "€25,000",
+      "tenure": "10 years",
+      "eligibility_criteria": "German businesses, cooperative bank membership preferred",
+      "documentation_required": ["Annual accounts", "Business plan", "Creditworthiness assessment"],
+      "application_process": "Apply through local cooperative bank (Volksbank/Raiffeisenbank)",
+      "collateral_required": "Security requirements based on risk assessment",
+      "last_updated": "2025-06-07"
+    }
+  ],
+  "Japan": [
+    {
+      "loan_name": "General Loan for SMEs",
+      "bank_name": "Japan Finance Corporation (JFC)",
+      "interest_rate": "1.21-2.85% fixed",
+      "max_amount": "¥480,000,000",
+      "min_amount": "¥1,000,000",
+      "tenure": "15 years",
+      "eligibility_criteria": "Japanese SMEs, equipment purchase, working capital needs",
+      "documentation_required": ["Business registration", "Financial statements", "Tax certificates"],
+      "application_process": "Apply directly to JFC branch offices",
+      "collateral_required": "Collateral or guarantor may be required",
+      "last_updated": "2025-06-07"
+    },
+    {
+      "loan_name": "MUFG Business Loan",
+      "bank_name": "Mitsubishi UFJ Financial Group",
+      "interest_rate": "2.45-4.75% variable",
+      "max_amount": "¥100,000,000",
+      "min_amount": "¥5,000,000",
+      "tenure": "7 years",
+      "eligibility_criteria": "Established Japanese corporations with good credit history",
+      "documentation_required": ["Corporate registration", "Financial statements", "Business plan"],
+      "application_process": "Apply through MUFG corporate banking division",
+      "collateral_required": "Real estate or business assets as collateral",
+      "last_updated": "2025-06-07"
+    },
+    {
+      "loan_name": "Shinkin Bank SME Loan",
+      "bank_name": "Shinkin Central Bank",
+      "interest_rate": "1.85-3.95% variable",
+      "max_amount": "¥50,000,000",
+      "min_amount": "¥2,000,000",
+      "tenure": "10 years",
+      "eligibility_criteria": "Local SMEs, cooperative membership, community-focused businesses",
+      "documentation_required": ["Business license", "Tax returns", "Financial statements"],
+      "application_process": "Apply through local Shinkin bank branch",
+      "collateral_required": "Personal or business guarantee typically required",
+      "last_updated": "2025-06-07"
+    },
+    {
+      "loan_name": "Mizuho Corporate Loan",
+      "bank_name": "Mizuho Bank",
+      "interest_rate": "2.15-5.25% variable",
+      "max_amount": "¥200,000,000",
+      "min_amount": "¥10,000,000",
+      "tenure": "10 years",
+      "eligibility_criteria": "Japanese companies with established banking relationship",
+      "documentation_required": ["Audited financial statements", "Business registration", "Management reports"],
+      "application_process": "Apply through Mizuho corporate banking relationship manager",
+      "collateral_required": "Adequate security based on loan amount and risk",
+      "last_updated": "2025-06-07"
+    },
+    {
+      "loan_name": "SMBC Business Finance",
+      "bank_name": "Sumitomo Mitsui Banking Corporation",
+      "interest_rate": "1.95-4.45% variable",
+      "max_amount": "¥150,000,000",
+      "min_amount": "¥3,000,000",
+      "tenure": "8 years",
+      "eligibility_criteria": "Japanese SMEs with viable business operations",
+      "documentation_required": ["Company registration", "Financial records", "Business plan"],
+      "application_process": "Apply through SMBC business banking center",
+      "collateral_required": "Business assets or real estate may be required",
+      "last_updated": "2025-06-07"
+    }
+  ]
+}
