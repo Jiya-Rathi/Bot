@@ -11,6 +11,12 @@ from granite.financial_scorer_granite import FinancialScorerGranite
 from utils.tax_estimator import TaxEstimator
 from utils.vector_index import RAGLoanAdvisor
 from utils.financial_scorer_rules import FinancialScorerRules
+from cashflow_forecasting.forecasting_engine import CashFlowForecaster
+from cashflow_forecasting.forecasting_engine import ForecastExplainer
+from cashflow_forecasting.scenario_manager import apply_scenario
+
+print("✅ financial_bot.py loaded")
+
 
 
 class FinancialBot:
@@ -19,17 +25,22 @@ class FinancialBot:
     """
 
     def __init__(self):
+        print("✅ financial_bot.py loaded")
+
         # Initialize Granite client
         self.granite_client = GraniteAPI()
 
         # Module instances
         self.expense_categorizer    = ExpenseCategorizer(self.granite_client)
         self.invoice_parser         = InvoiceParser(self.granite_client)
-        #self.cash_flow_forecaster   = CashFlowForecaster()
+        self.cash_flow_forecaster   = CashFlowForecaster()
         self.tax_estimator          = TaxEstimator(self.granite_client)
         self.loan_advisor           = RAGLoanAdvisor()
         self.scorer_rules           = FinancialScorerRules()
         self.scorer_granite         = FinancialScorerGranite(self.granite_client)
+        self.forecast_explainer = ForecastExplainer(self.granite_client)
+        
+
 
         # Data container
         self.transactions = pd.DataFrame()
@@ -111,6 +122,17 @@ class FinancialBot:
         commentary = self.scorer_granite.explain_score(score, summary_stats)
 
         return {'score': score, 'commentary': commentary}
+    
+    def explain_cashflow_forecast(self, days=30) -> str:
+        forecast_df = self.cash_flow_forecaster.forecast(self.transactions, days)
+        return self.forecast_explainer.explain_forecast(forecast_df, days)
+    
+    def simulate_and_explain(self, scenario: dict) -> str:
+        from cashflow_forecasting.scenario_manager import apply_scenario
+        adjusted_df = apply_scenario(self.transactions, scenario)
+        forecast_df = self.cash_flow_forecaster.forecast(adjusted_df)
+        return self.forecast_explainer.explain_forecast(forecast_df)
+
 
     def run_full_analysis(self, csv_path: str):
         # 1) Load CSV
@@ -175,6 +197,21 @@ class FinancialBot:
         #    raw_invoices = [...]
         #    parsed = self.invoice_parser.parse(raw_invoice_text)
         #    print(parsed)
+    def forecast_summary(self, days: int = 30) -> str:
+        print("✅ forecast_summary method called")
+        forecast_df = self.cash_flow_forecaster.forecast(self.transactions, days)
+        low_cash_days = forecast_df[forecast_df['yhat'] < 0]
+
+        if not low_cash_days.empty:
+            warning_day = low_cash_days.iloc[0]
+            return (
+                f"📉 *Cash Flow Alert!*\n"
+                f"On *{warning_day['ds'].strftime('%b %d')}*, your projected balance "
+                f"may dip to ${warning_day['yhat']:.2f}.\n"
+                f"💡 Consider cutting expenses or delaying non-essential payments."
+            )
+        return "✅ Your cash flow looks healthy for the next 30 days!"
+
 
 
 if __name__ == "__main__":
