@@ -97,13 +97,16 @@ class FileManager:
         """Validate that the file is actually a CSV."""
         try:
             # Check file extension
-            if not file_path.lower().endswith('.csv'):
+            print(file_path.lower()+"12")
+            if not file_path.strip().lower().endswith('.csv'):
                 return False
             
             # Check MIME type
-            mime_type, _ = mimetypes.guess_type(file_path)
-            if mime_type and mime_type not in ['text/csv', 'text/plain']:
-                return False
+            
+            #mime_type, _ = mimetypes.guess_type(file_path)
+            #print(mime_type)
+            #if mime_type and mime_type not in ['text/csv', 'text/plain']:
+                #return False
             
             # Try to read first few lines as CSV
             import csv
@@ -116,8 +119,10 @@ class FileManager:
                     return True
                 except csv.Error:
                     # Try common CSV patterns
+                    print("sniff failed")
                     if ',' in sample or ';' in sample or '\t' in sample:
                         return True
+                    print("not found in sample")
                     return False
                     
         except Exception:

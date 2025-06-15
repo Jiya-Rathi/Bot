@@ -1,7 +1,8 @@
 # tax_cli.py
 import argparse
-from dash_modules.tax_assistant import TaxAssistant
+from dash_modules.reports.tax_assistant import TaxAssistant
 import json
+
 
 def main():
     parser = argparse.ArgumentParser(description="Run tax assistant CLI.")

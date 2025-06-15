@@ -17,64 +17,72 @@ class CSVValidator:
         
         # Minimum data requirements
         self.min_transactions = 5
-        self.max_file_size_mb = 50
+        self.max_file_size_mb = 500
         
     def validate_csv_file(self, file_path: str) -> Dict:
-        """
-        Comprehensive CSV validation.
-        
-        Returns:
-            dict: Validation results with success status, errors, warnings, and metadata
-        """
-        result = {
-            'success': False,
-            'errors': [],
-            'warnings': [],
-            'metadata': {},
-            'suggestions': []
-        }
-        
-        try:
-            # Step 1: Basic file validation
-            file_validation = self._validate_file_basics(file_path)
-            if not file_validation['success']:
-                result['errors'].extend(file_validation['errors'])
+            """
+            Comprehensive CSV validation.
+            
+            Returns:
+                dict: Validation results with success status, errors, warnings, and metadata
+            """
+            result = {
+                'success': False,
+                'errors': [],
+                'warnings': [],
+                'metadata': {},
+                'suggestions': []
+            }
+            print("validate_csv_file:::", file_path)
+            
+            try:
+                # Step 1: Basic file validation
+                file_validation = self._validate_file_basics(file_path)
+                print(file_validation)
+                if not file_validation['success']:
+                    result['errors'].extend(file_validation['errors'])
+                    return result
+                
+                # Step 2: Load and parse CSV
+                df_result = self._load_csv_safely(file_path)
+                if not df_result['success']:
+                    result['errors'].extend(df_result['errors'])
+                    return result
+                
+                df = df_result['dataframe']
+                print("Df",df)
+                result['metadata']['row_count'] = len(df)
+                result['metadata']['column_count'] = len(df.columns)
+                result['metadata']['columns'] = list(df.columns)
+                
+                # Step 3: Structure validation
+                structure_validation = self._validate_structure(df)
+                print(" structure_validation", structure_validation)
+                result['errors'].extend(structure_validation['errors'])
+                result['warnings'].extend(structure_validation['warnings'])
+                result['metadata'].update(structure_validation['metadata'])
+                
+                # Step 4: Data quality validation
+                quality_validation = self._validate_data_quality(df)
+                print("quality_validation",quality_validation)
+                result['errors'].extend(quality_validation['errors'])
+                result['warnings'].extend(quality_validation['warnings'])
+                result['metadata'].update(quality_validation['metadata'])
+                
+                # Step 5: Generate suggestions
+                result['suggestions'] = self._generate_suggestions(result)
+                print("result:",result)
+                # Overall success determination
+                result['success'] = len(result['errors']) == 0
+
+                result['dataframe']=df_result['dataframe']
+                print("1234 RESULTS:",result)
+                
                 return result
-            
-            # Step 2: Load and parse CSV
-            df_result = self._load_csv_safely(file_path)
-            if not df_result['success']:
-                result['errors'].extend(df_result['errors'])
+                
+            except Exception as e:
+                result['errors'].append(f"Unexpected error during validation: {str(e)}")
                 return result
-            
-            df = df_result['dataframe']
-            result['metadata']['row_count'] = len(df)
-            result['metadata']['column_count'] = len(df.columns)
-            result['metadata']['columns'] = list(df.columns)
-            
-            # Step 3: Structure validation
-            structure_validation = self._validate_structure(df)
-            result['errors'].extend(structure_validation['errors'])
-            result['warnings'].extend(structure_validation['warnings'])
-            result['metadata'].update(structure_validation['metadata'])
-            
-            # Step 4: Data quality validation
-            quality_validation = self._validate_data_quality(df)
-            result['errors'].extend(quality_validation['errors'])
-            result['warnings'].extend(quality_validation['warnings'])
-            result['metadata'].update(quality_validation['metadata'])
-            
-            # Step 5: Generate suggestions
-            result['suggestions'] = self._generate_suggestions(result)
-            
-            # Overall success determination
-            result['success'] = len(result['errors']) == 0
-            
-            return result
-            
-        except Exception as e:
-            result['errors'].append(f"Unexpected error during validation: {str(e)}")
-            return result
     
     def _validate_file_basics(self, file_path: str) -> Dict:
         """Basic file size and accessibility checks."""
@@ -352,6 +360,8 @@ def validate_csv(file_path: str) -> pd.DataFrame:
     """
     validator = get_csv_validator()
     result = validator.validate_csv_file(file_path)
+
+    print("Final_RESULTS",result)
 
     if not result["success"]:
         error_list = result["errors"] + result.get("suggestions", [])

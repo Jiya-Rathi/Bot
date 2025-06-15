@@ -110,6 +110,53 @@ class LedgerManager:
         print(f"✅ Processed {success_count} transactions.")
         if skipped_count:
             print(f"⚠️ Skipped {skipped_count} rows.")
+
+    def bulk_apply_df(self, df: pd.DataFrame) -> None:
+        """
+        Overwrites the existing ledger with new transactions from a standardized DataFrame.
+        """
+        if df.empty or not all(col in df.columns for col in ['date', 'description', 'amount']):
+            print("❌ DataFrame is missing required columns or is empty.")
+            return
+    
+        df_clean = df[df['amount'].notna() & (df['amount'] != 0)].copy()
+        if df_clean.empty:
+            print("⚠ No valid transactions found in DataFrame.")
+            return
+    
+        # 🔁 Replace ledger (instead of adding)
+        self.ledger = {"balance": 0.0, "history": []}
+        self._dirty = True  # Mark as changed
+    
+        amounts = df_clean['amount'].abs().values
+        txn_types = ["credit" if x > 0 else "debit" for x in df_clean["amount"]]
+        dates = pd.to_datetime(df_clean["date"]).dt.strftime("%-m/%-d/%y").values
+        descriptions = df_clean["description"].fillna("No Description").astype(str).values
+    
+        new_transactions = []
+        balance_delta = 0.0
+    
+        for i in range(len(amounts)):
+            amount = float(amounts[i])
+            txn_type = txn_types[i]
+            if txn_type == "credit":
+                balance_delta += amount
+            else:
+                balance_delta -= amount
+    
+            new_transactions.append({
+                "amount": amount,
+                "type": txn_type,
+                "desc": descriptions[i],
+                "date": dates[i]
+            })
+    
+        # ✅ Write fresh transactions
+        self.ledger["balance"] = balance_delta
+        self.ledger["history"] = new_transactions
+        self._save_ledger()
+    
+        print(f"✅ Replaced ledger with {len(new_transactions)} transactions.")
     
     def get_balance(self) -> float:
         return self.ledger["balance"]
