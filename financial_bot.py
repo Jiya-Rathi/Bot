@@ -221,15 +221,17 @@ class FinancialBot:
         print("✅ forecast_summary method called")
         forecast_df = self.cash_flow_forecaster.forecast(self.transactions, days)
         low_cash_days = forecast_df[forecast_df['yhat'] < 0]
-    
+
         if not low_cash_days.empty:
             warning_day = low_cash_days.iloc[0]
+            warning_date = pd.to_datetime(warning_day['ds'])  # make sure it's datetime
             return (
                 f"📉 *Cash Flow Alert!*\n"
-                f"On *{warning_day['ds'].strftime('%b %d')}*, your projected balance "
+                f"On *{warning_date.strftime('%b %d, %Y')}*, your projected balance "
                 f"may dip to ${warning_day['yhat']:.2f}.\n"
                 f"💡 Consider cutting expenses or delaying non-essential payments."
             )
+
         return "✅ Your cash flow looks healthy for the next 30 days!"
 
 

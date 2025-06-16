@@ -26,7 +26,6 @@ def whatsapp_handler():
     media_content_type = request.form.get("MediaContentType0")
     # Handle CSV Upload via WhatsApp
     if media_url and media_content_type == "text/csv":
-        print("Entering handle_csv_upload")
         response= handle_csv_upload(media_url, user_id="default")
 
 
@@ -63,6 +62,8 @@ def whatsapp_handler():
 
     elif "simulate" in user_input or "what if" in user_input:
         scenario = granite_scenario_from_text(user_input, bot.granite_client)
+        print("Generated scenario:", scenario)  
+        print("User input was:", user_input)    
         response = bot.simulate_and_explain(scenario)
 
 
@@ -102,9 +103,7 @@ def normalize_messy_csv(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 def handle_csv_upload(media_url: str, user_id: str = "default") -> str:
-    print("Handle_csv_upload called")
     try:
-        print("Inside try for handle_csv_upload")
         # Step 1: Download CSV using FileManager
         result = file_manager.download_csv_from_twilio(media_url, user_id=user_id, twilio_auth=twilio_auth)
         print(result)
@@ -112,23 +111,21 @@ def handle_csv_upload(media_url: str, user_id: str = "default") -> str:
             return f"❌ File download failed: {result['error']}"
 
         file_path = result["file_path"]
-        print("111",file_path)
+
 
         # Step 2: Validate CSV structure
         validated_df = validate_csv(file_path)
-        print("validated_df",validated_df)
 
         # Step 3: Standardize columns using ColumnMapper
         normalized_df = normalize_messy_csv(validated_df)
         standardized_df = map_columns(normalized_df)
-        print("333")
+
 
         # Step 4: Save as JSON ledger
         with LedgerManager() as ledger:
             ledger.bulk_apply_df(standardized_df)
             ledger._save_ledger()
 
-        print("Success")
         return (
             "✅ CSV uploaded and processed successfully!\n"
             "You can now type:\n"

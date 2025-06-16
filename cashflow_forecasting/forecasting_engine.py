@@ -60,5 +60,5 @@ class ForecastExplainer:
         )
 
         # Ask Granite
-        response = self.granite_client.chat(prompt)
+        response = self.granite_client.generate_text(prompt)
         return response.strip()
