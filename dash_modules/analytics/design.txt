@@ -2,3 +2,5 @@ materials -
 1. Financial Scoring and Insights
 2. Cashflow Forecasting
 3. Top 3 cash-in/cash-out
+
+4. flask and ngrok
