@@ -8,13 +8,13 @@ class SMBFinancialHealthAnalyzer:
     
     def calculate_smb_health_score(self, company_profile):
         """Main method to calculate SMB health score"""
-        print("🔍 Getting peer data...")
+        print(" Getting peer data...")
         smb_peers = self._get_smb_peer_data(company_profile)
         
-        print("📊 Calculating metrics...")
+        print(" Calculating metrics...")
         smb_metrics = self._calculate_smb_metrics(company_profile)
         
-        print("⚖️ Generating weighted score...")
+        print(" Generating weighted score...")
         return self._calculate_smb_weighted_score(smb_metrics, smb_peers, company_profile)
     
     def _get_smb_peer_data(self, profile):

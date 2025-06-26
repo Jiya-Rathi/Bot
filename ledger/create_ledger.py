@@ -1,6 +1,6 @@
 from ledger.ledger_manager import LedgerManager
 def main():
-    csv_path = "C:\Storage\SDSU\Finny-Financial Bot\Finny-FinancialBot\data\\bank_transaction_1_year.csv"
+    csv_path = "C:\Storage\SDSU\Finny-Financial Bot\Finny-FinancialBot\data\Shri Ganesh 1 year.csv"
     
     # Use context manager for automatic cleanup
     with LedgerManager() as ledger:

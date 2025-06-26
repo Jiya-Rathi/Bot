@@ -14,7 +14,7 @@ import os
 API_KEY = "Q64AAxJfpKRQzuXuSyTM7YyeAXkaGeZZ7HJYYCpwHV-3"
 PROJECT_ID = "6e2f5a1b-5e91-45e7-95c1-4d81614418e4"
 ML_API_BASE = "https://us-south.ml.cloud.ibm.com"
-MODEL_ID = "ibm/granite-13b-instruct-v2"
+MODEL_ID = "ibm/granite-3-3-8b-instruct"
 VERSION = "2023-05-29"
 # -----------------------------------------
 

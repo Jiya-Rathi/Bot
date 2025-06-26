@@ -14,6 +14,8 @@ from utils.financial_scorer_rules import FinancialScorerRules
 from cashflow_forecasting.forecasting_engine import CashFlowForecaster
 from cashflow_forecasting.forecasting_engine import ForecastExplainer
 from cashflow_forecasting.scenario_manager import apply_scenario
+from utils.business_profile import load_profile
+from dash_modules.analytics.run_smb_analysis import run_smb_analysis
 
 print("✅ financial_bot.py loaded")
 
@@ -115,38 +117,17 @@ class FinancialBot:
         return self.loan_advisor.answer_loan_question(self.granite_client, question)
 
     def score_financials(self) -> dict:
-        cash_flow_stats = self.cash_flow_forecaster.prepare_dataframe(self.transactions) \
-            .groupby('ds')['y'].sum().agg({
-                'total_revenue': lambda x: x[x > 0].sum(),
-                'total_expenses': lambda x: abs(x[x < 0].sum()),
-                'net_profit': lambda x: x.sum()
-            })
-        profit_margin = (
-            (cash_flow_stats['net_profit'] / cash_flow_stats['total_revenue'] * 100)
-            if cash_flow_stats['total_revenue'] > 0 else 0
-        )
-        weekly_trend = self.transactions.groupby(self.transactions['Date'].dt.to_period('W'))[
-            'Amount'].sum().to_dict()
-        overdue = sum(
-            1 for _, row in self.transactions.iterrows()
-            if 'invoice' in row['Description'].lower()
-            and (pd.Timestamp.now() - row['Date']).days > 30
-        )
-        anomalies = []  # Could call expense_anomaly_detection()
+            business_profile = load_profile()
+            results = run_smb_analysis(business_profile)
 
-        summary_stats = {
-            'profit_margin': profit_margin,
-            'weekly_trend': weekly_trend,
-            'total_revenue': cash_flow_stats['total_revenue'],
-            'total_expenses': cash_flow_stats['total_expenses'],
-            'net_profit': cash_flow_stats['net_profit'],
-            'overdue_count': overdue
-        }
-
-        score = self.scorer_rules.score(summary_stats, overdue, anomalies)
-        commentary = self.scorer_granite.explain_score(score, summary_stats)
-
-        return {'score': score, 'commentary': commentary}
+            return {
+                "score": results["score"]["overall_score"],
+                "rating": results["score"]["health_rating"],
+                "summary": results["summary"],
+                #"insights": results["insights"],
+                #"benchmarking": results["benchmarking"],
+                #"ai_analysis": results["ai_analysis"]
+            }
     
     def explain_cashflow_forecast(self, days=30) -> str:
         forecast_df = self.cash_flow_forecaster.forecast(self.transactions, days)

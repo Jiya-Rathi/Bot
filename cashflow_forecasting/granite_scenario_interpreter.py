@@ -1,3 +1,7 @@
+import json
+import re
+from datetime import datetime, timedelta
+
 def granite_scenario_from_text(user_input: str, granite_client) -> dict:
     """
     Uses Granite LLM to interpret a user's natural language question and convert
@@ -44,89 +48,151 @@ User input: "{user_input}"
 
 JSON response:"""
 
-    # Step 1: Ask Granite using the correct method name
-    response = granite_client.generate_text(prompt, max_tokens=512, temperature=0.1)
-    
-    # Debug: Show what the LLM actually returned
-    print("LLM Raw Response:")
-    print(repr(response))
-    print("LLM Response Content:")
-    print(response)
-
-    # Step 2: Parse the LLM's output safely into a Python dictionary
     try:
-        import json
-        from datetime import datetime, timedelta
+        # Step 1: Get response from Granite
+        response = granite_client.generate_text(prompt, max_tokens=512, temperature=0.1)
         
-        # Clean up the response (remove any extra whitespace/newlines)
-        response = response.strip()
+        # Step 2: Enhanced debugging and cleaning
+        print("=== DEBUG INFO ===")
+        print(f"Raw response type: {type(response)}")
+        print(f"Raw response length: {len(response)}")
+        print(f"Raw response repr: {repr(response)}")
+        print(f"Raw response: '{response}'")
         
-        if not response:
-            raise ValueError("Empty response from LLM")
+        # Step 3: Clean and parse JSON with multiple fallback strategies
+        scenario = safe_json_parse(response)
         
-        # Try to fix the malformed JSON first
-        fixed_response = fix_malformed_json(response)
-        
-        # Try JSON parsing
-        try:
-            scenario = json.loads(fixed_response)
-            print("Successfully parsed JSON")
-        except json.JSONDecodeError as e:
-            print(f"JSON parsing failed even after fixing: {e}")
-            raise ValueError(f"Could not parse as JSON: {e}")
-        
-        if not isinstance(scenario, dict):
-            raise ValueError(f"LLM response was not a dictionary. Got: {type(scenario)}")
-        
-        print("Parsed scenario:", scenario)
-        
-        # Validate and fix common issues in the scenario
+        # Step 4: Validate and fix the scenario
         scenario = validate_and_fix_scenario(scenario)
         
-        print("Final validated scenario:", scenario)
+        print(f"Final validated scenario: {scenario}")
         return scenario
         
     except Exception as e:
+        print(f"Error in granite_scenario_from_text: {e}")
         raise ValueError(f"❌ Error parsing LLM response:\n{e}\n\nRaw output:\n{response}")
+
+
+def safe_json_parse(response: str) -> dict:
+    """
+    Safely parse JSON with multiple fallback strategies
+    """
+    if not response or not isinstance(response, str):
+        raise ValueError("Empty or invalid response")
+    
+    # Strategy 1: Direct parsing (try first)
+    try:
+        return json.loads(response.strip())
+    except json.JSONDecodeError as e:
+        print(f"Direct parsing failed: {e}")
+    
+    # Strategy 2: Clean response and try again
+    try:
+        cleaned = clean_response(response)
+        print(f"Cleaned response: {repr(cleaned)}")
+        return json.loads(cleaned)
+    except json.JSONDecodeError as e:
+        print(f"Cleaned parsing failed: {e}")
+    
+    # Strategy 3: Extract JSON from text
+    try:
+        extracted = extract_json_from_text(response)
+        print(f"Extracted JSON: {repr(extracted)}")
+        return json.loads(extracted)
+    except json.JSONDecodeError as e:
+        print(f"Extracted parsing failed: {e}")
+    
+    # Strategy 4: Fix malformed JSON patterns
+    try:
+        fixed = fix_malformed_json(response)
+        print(f"Fixed JSON: {repr(fixed)}")
+        return json.loads(fixed)
+    except json.JSONDecodeError as e:
+        print(f"Fixed parsing failed: {e}")
+    
+    # Strategy 5: Last resort - create a default scenario
+    print("All parsing strategies failed, creating default scenario")
+    return {"add_expense": {"description": "General expense", "amount": -1000}}
+
+
+def clean_response(response: str) -> str:
+    """Clean the response string of common issues"""
+    # Remove BOM and non-printable characters
+    response = response.strip()
+    if response.startswith('\ufeff'):
+        response = response[1:]
+    
+    # Remove non-printable characters except newlines and tabs
+    response = ''.join(char for char in response if char.isprintable() or char in '\n\t')
+    
+    # Remove leading/trailing whitespace
+    response = response.strip()
+    
+    return response
+
+
+def extract_json_from_text(text: str) -> str:
+    """Extract JSON object from text that might contain other content"""
+    # Look for JSON object patterns
+    json_pattern = r'\{[^{}]*(?:\{[^{}]*\}[^{}]*)*\}'
+    matches = re.findall(json_pattern, text, re.DOTALL)
+    
+    if matches:
+        # Return the first (and hopefully only) JSON match
+        return matches[0].strip()
+    
+    # If no complete JSON found, try to find partial JSON and fix it
+    brace_start = text.find('{')
+    if brace_start != -1:
+        # Find the last closing brace
+        brace_end = text.rfind('}')
+        if brace_end != -1 and brace_end > brace_start:
+            return text[brace_start:brace_end + 1]
+    
+    raise ValueError("No JSON object found in text")
 
 
 def fix_malformed_json(json_str: str) -> str:
     """
-    Fix the specific malformed JSON pattern we're seeing:
-    {"key1": {...}}, "key2": {...}}
-    
-    Should become:
-    {"key1": {...}, "key2": {...}}
+    Fix common malformed JSON patterns
     """
     json_str = json_str.strip()
     
-    print(f"Original JSON: {json_str}")
+    print(f"Fixing malformed JSON: {repr(json_str)}")
     
-    # The specific issue: }}, " should be }, "
-    if '}}, "' in json_str:
-        json_str = json_str.replace('}}, "', '}, "')
-        print(f"After fixing }}, pattern: {json_str}")
+    # Fix common patterns
+    # Pattern 1: }}, " should be }, "
+    json_str = re.sub(r'\}\},\s*"', '}, "', json_str)
     
-    # Make sure it has proper braces
+    # Pattern 2: Missing opening brace
     if not json_str.startswith('{'):
         json_str = '{' + json_str
-        print(f"Added opening brace: {json_str}")
     
-    # Fix double closing braces at the end
-    if json_str.endswith('}}'):
-        json_str = json_str[:-1]
-        print(f"Removed extra closing brace: {json_str}")
-    elif not json_str.endswith('}'):
-        json_str = json_str + '}'
-        print(f"Added closing brace: {json_str}")
+    # Pattern 3: Missing closing brace or extra braces
+    open_braces = json_str.count('{')
+    close_braces = json_str.count('}')
     
-    print(f"Final fixed JSON: {json_str}")
+    if open_braces > close_braces:
+        # Add missing closing braces
+        json_str += '}' * (open_braces - close_braces)
+    elif close_braces > open_braces:
+        # Remove extra closing braces from the end
+        while json_str.endswith('}}') and json_str.count('}') > json_str.count('{'):
+            json_str = json_str[:-1]
+    
+    # Pattern 4: Fix single quotes to double quotes
+    json_str = re.sub(r"'([^']*)':", r'"\1":', json_str)  # Keys
+    json_str = re.sub(r":\s*'([^']*)'", r': "\1"', json_str)  # String values
+    
+    # Pattern 5: Fix trailing commas
+    json_str = re.sub(r',(\s*[}\]])', r'\1', json_str)
+    
+    print(f"Fixed JSON result: {repr(json_str)}")
     return json_str
 
 
 def validate_and_fix_scenario(scenario: dict) -> dict:
     """Validate and fix common issues in the scenario dictionary"""
-    from datetime import datetime, timedelta
     
     if 'add_expense' in scenario:
         expense = scenario['add_expense']

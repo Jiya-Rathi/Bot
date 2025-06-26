@@ -1,3 +1,8 @@
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")))
+
+
 import pandas as pd
 from pathlib import Path
 from utils.granite import summarize_with_granite
@@ -54,15 +59,19 @@ def get_overview_metrics():
 
 def get_overview_narrative(revenue, expenses, profit, tax):
     prompt = f"""
-    Based on the business ledger:
-    - Monthly Revenue: ${revenue}
-    - Total Expenses: ${expenses}
-    - Net Profit: ${profit}
-    - Estimated Tax Liability: ${tax}
-
-    Write a concise, professional 2-3 sentence narrative summarizing the business's financial health this month.
-    """
-    return summarize_with_granite(prompt)
+        Based on the business ledger for the current month:
+        - Revenue: ${revenue:,.0f}
+        - Expenses: ${expenses:,.0f}
+        - Net Profit: ${profit:,.0f}
+        - Estimated Tax: ${tax:,.0f}
+        
+        Write a concise, professional summary (2–3 sentences) for a financial report.
+        Ensure numbers and sentences are clearly separated and readable.
+        """
+    narrative = summarize_with_granite(prompt)
+    narrative = narrative.replace(".", ". ").replace("  ", " ")
+    print("narrative:::", narrative)
+    return narrative
 
 
 def get_monthly_overview():
@@ -88,6 +97,41 @@ def get_monthly_overview():
     summary["tax_liability"] = 0.25 * summary["net_profit"]
     return summary
 
+import streamlit as st
+
+def render_overview():
+    (
+        revenue, revenue_delta,
+        expenses, expenses_delta,
+        profit, profit_delta,
+        tax, tax_delta
+    ) = get_overview_metrics()
+
+    st.title("📊 Accounting Bot Dashboard — Overview")
+
+    col1, col2 = st.columns(2)
+    with col1:
+        st.metric("Monthly Revenue", f"${revenue:,}", f"{revenue_delta}%")
+        st.metric("Net Profit", f"${profit:,}", f"{profit_delta}%")
+    with col2:
+        st.metric("Total Expenses", f"${expenses:,}", f"{expenses_delta}%")
+        st.metric("Tax Liability", f"${tax:,}", f"{tax_delta}%")
+
+    st.markdown("---")
+    st.subheader("📋 Monthly Financial Summary")
+
+    narrative = get_overview_narrative(revenue, expenses, profit, tax)
+
+    if narrative and isinstance(narrative, str) and narrative.strip():
+        st.text(narrative.strip())
+    else:
+        st.warning("No summary generated.")
+
+    st.markdown("---")
+    st.subheader("📆 Monthly Breakdown")
+    monthly_df = get_monthly_overview()
+    st.dataframe(monthly_df, use_container_width=True)
+
 
 if __name__ == "__main__":
     # Get financial metrics
@@ -107,6 +151,7 @@ if __name__ == "__main__":
 
     # Generate narrative
     narrative = get_overview_narrative(revenue, expenses, profit, tax)
+    narrative = narrative.replace(".", ". ").replace("  ", " ")
     print("\n📝 Summary Narrative:")
     print(narrative)
 

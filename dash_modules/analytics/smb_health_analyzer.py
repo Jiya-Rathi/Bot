@@ -8,13 +8,13 @@ class SMBFinancialHealthAnalyzer:
     
     def calculate_smb_health_score(self, company_profile):
         """Main method to calculate SMB health score"""
-        print("🔍 Getting peer data...")
+        print(" Getting peer data...")
         smb_peers = self._get_smb_peer_data(company_profile)
         
-        print("📊 Calculating metrics...")
+        print(" Calculating metrics...")
         smb_metrics = self._calculate_smb_metrics(company_profile)
         
-        print("⚖️ Generating weighted score...")
+        print(" Generating weighted score...")
         return self._calculate_smb_weighted_score(smb_metrics, smb_peers, company_profile)
     
     def _get_smb_peer_data(self, profile):
@@ -203,34 +203,49 @@ Focus on the most impactful changes that align with their current capabilities a
             return f"Insights unavailable: {e}"
     
     def generate_benchmarking_report(self, profile, score_result, peers):
-        """Generate a detailed benchmarking analysis"""
-        benchmark_prompt = f"""Create a competitive benchmarking analysis for this SMB:
+        """Generate a detailed benchmarking analysis comparing with actual peer metrics"""
+    
+        def avg(field):
+            values = [p[field] for p in peers if isinstance(p.get(field), (int, float))]
+            return sum(values) / len(values) if values else 0
+    
+        # Compute peer averages
+        peer_metrics = {
+            "cash_runway": avg("cash_runway_months"),
+            "net_profit_margin": avg("net_profit_margin"),
+            "churn_rate": avg("customer_churn_rate"),
+            "recurring_revenue": avg("recurring_revenue_pct"),
+            "revenue_predictability": avg("revenue_predictability"),
+            "revenue_concentration": avg("revenue_concentration_pct"),
+            "employees": avg("employees"),
+            "revenue": avg("revenue"),
+            "years_in_business": avg("years_in_business"),
+        }
+    
+        # Prompt including both sets of metrics
+        benchmark_prompt = f"""
+You are a senior financial analyst. Compare this SMB to peers using the following:
 
-TARGET COMPANY:
-- {profile['industry']} business in {profile['country']}
+SMB:
+- {profile['industry']} in {profile['country']}
 - {profile['employees']} employees, ${profile['annual_revenue']:,} revenue
-- Health Score: {score_result['overall_score']}/100
+- {profile['years_in_business']} years in business
 
-PEER COMPARISON DATA:
-Found {len(peers)} comparable companies in the same industry and region.
+Metrics (Company vs Peers):
+- Cash Runway: {profile['cash_runway']} vs {peer_metrics['cash_runway']:.1f}
+- Profit Margin: {profile['net_profit_margin']*100:.1f}% vs {peer_metrics['net_profit_margin']*100:.1f}%
+- Churn Rate: {profile['churn_rate']*100:.1f}% vs {peer_metrics['churn_rate']*100:.1f}%
+- Recurring Revenue: {profile['recurring_revenue']*100:.1f}% vs {peer_metrics['recurring_revenue']*100:.1f}%
 
-Based on this company's metrics vs typical SMB benchmarks:
-- Liquidity: {score_result['detailed_scores']['liquidity_score']:.0f}/100
-- Profitability: {score_result['detailed_scores']['profitability_score']:.0f}/100
-- Growth: {score_result['detailed_scores']['growth_potential']:.0f}/100
-- Risk: {score_result['detailed_scores']['risk_score']:.0f}/100
-- Efficiency: {score_result['detailed_scores']['efficiency_score']:.0f}/100
+INSTRUCTIONS — Answer all 3 below clearly:
+1. **Underperforming Metrics** — List which metrics are worse than peers  
+2. **Outperforming Metrics** — List which metric(s) are better  
+3. **Top 3 Problems to Fix** — Start each bullet with an *action verb* (e.g. Improve, Reduce, Increase)
+Only return the 3 numbered sections in bullets. Do not repeat values or re-state the company profile.
+"""
 
-Provide a benchmarking report covering:
-1. How this company ranks against industry peers
-2. Metrics where they significantly outperform or underperform
-3. Competitive advantages they should emphasize
-4. Areas where they're falling behind the competition
-5. Market positioning recommendations
-
-Format as a professional benchmarking report."""
-        
         try:
-            return summarize_with_granite(benchmark_prompt, temperature=0.6, max_new_tokens=400)
+            #print(benchmark_prompt)
+            return summarize_with_granite(benchmark_prompt, temperature=1.1, max_new_tokens=1200)
         except Exception as e:
             return f"Benchmarking analysis unavailable: {e}"
