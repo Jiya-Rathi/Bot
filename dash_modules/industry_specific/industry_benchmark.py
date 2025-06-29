@@ -15,7 +15,7 @@ def render_industry_benchmark():
     # Load business profile and peer data
     business_profile = load_profile()
     peer_data = load_peer_benchmark_data()
-    
+    print(len(peer_data))
     if not business_profile:
         st.warning("Please complete your business profile to enable industry benchmarking.")
         return
@@ -72,10 +72,10 @@ def render_industry_benchmark():
     with col1:
         st.markdown("### Current Industry Trends")
         for i, trend in enumerate(industry_trends['trends'], 1):
-            st.markdown(f"**{i}.** {trend}")
+            st.markdown(f"{i}.** {trend}")
         
         st.markdown("### Industry Forecast")
-        st.markdown(f"*{industry_trends['forecast']}*")
+        st.markdown(f"{industry_trends['forecast']}")
     
     with col2:
         st.markdown("### Key Metrics to Monitor")
@@ -116,6 +116,7 @@ def filter_relevant_peers(df, company_info):
         (df['industry'] == company_info.get('industry')) & 
         (df['country'] == company_info.get('country')) & 
         (df['region'] == company_info.get('region', 'Urban'))
+        #(df['business_model'] == "Mixed")
     ]
 
 
@@ -166,7 +167,7 @@ def calculate_percentiles(peers_df, company_metrics):
 def create_benchmark_table(peers_df, company_metrics, percentiles):
     """Create a comparison table of company vs industry averages"""
     metrics_to_display = {
-        'revenue': ('Revenue', '\$'),
+        'revenue': ('Revenue', '$'),
         'revenue_predictability': ('Revenue Predictability', ''),
         'cash_runway_months': ('Cash Runway', 'months'),
         'customer_churn_rate': ('Customer Churn', '%'),
@@ -183,7 +184,7 @@ def create_benchmark_table(peers_df, company_metrics, percentiles):
         # Your company value
         if metric in company_metrics:
             value = company_metrics[metric]
-            if unit == '\$':
+            if unit == '$':
                 row['Your Company'] = f"\${value:,.2f}"
             elif unit == '%':
                 row['Your Company'] = f"{value*100:.1f}%"
@@ -195,7 +196,7 @@ def create_benchmark_table(peers_df, company_metrics, percentiles):
         # Industry average
         if metric in peers_df.columns and not peers_df.empty:
             avg_value = peers_df[metric].mean()
-            if unit == '\$':
+            if unit == '$':
                 row['Industry Average'] = f"\${avg_value:,.2f}"
             elif unit == '%':
                 row['Industry Average'] = f"{avg_value*100:.1f}%"
@@ -421,7 +422,7 @@ def get_industry_trends(industry, country, region, peers_df):
     # Call Granite for analysis
     try:
         # Get response from Granite
-        raw_response = summarize_with_granite(prompt)
+        raw_response = summarize_with_granite(prompt,temperature=0.3, max_new_tokens=1000)
         
         # Parse the JSON response with multiple fallback methods
         trends_data = parse_granite_response(raw_response, industry, country, region)
@@ -457,7 +458,7 @@ def parse_granite_response(response, industry, country, region):
     # Second attempt: Look for code blocks that might contain JSON
     try:
         import re
-        code_block_pattern = r"```(?:json)?(.*?)```"
+        code_block_pattern = r"(?:json)?(.*?)"
         code_blocks = re.findall(code_block_pattern, response, re.DOTALL)
         
         for block in code_blocks:
@@ -503,7 +504,7 @@ def parse_granite_response(response, industry, country, region):
             forecast = forecast_section.group(1).strip()
         
         # Look for action items
-        actions_section = re.search(r"(?:action|recommendation).*?:?(.*?)\$", 
+        actions_section = re.search(r"(?:action|recommendation).?:?(.?)\$", 
                                    response, re.IGNORECASE | re.DOTALL)
         if actions_section:
             action_lines = [line.strip() for line in actions_section.group(1).split('\n') if line.strip()]

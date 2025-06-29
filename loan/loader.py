@@ -1,47 +1,58 @@
-import json
 import os
-import faiss
-import pickle
-from sentence_transformers import SentenceTransformer
-import numpy as np
-from loan.config import JSON_PATH, INDEX_PATH, MODEL_NAME
-
+import json
+from langchain_core.documents import Document
+from langchain_ibm import WatsonxEmbeddings
+from langchain.vectorstores import Chroma
+from config.settings import GRANITE_API_KEY,GRANITE_ENDPOINT,GRANITE_PROJECT_ID
+from ibm_watsonx_ai.foundation_models.utils.enums import EmbeddingTypes
 
 class LoanVectorDB:
-    def __init__(self, json_path: str = JSON_PATH, index_path: str = INDEX_PATH, model_name: str = MODEL_NAME):
+    def __init__(self, json_path: str, persist_dir: str = "loan"):
         self.json_path = json_path
-        self.index_path = index_path  # Without extension
-        self.model = SentenceTransformer(model_name)
-        self.index = None
-        self.embeddings = None
-        self.index_docs = []
+        self.persist_dir = persist_dir
+        self.docs = []
+        self.vectorstore = None
 
-    def load_and_embed(self):
+        self.embedder = WatsonxEmbeddings(
+            model_id=EmbeddingTypes.IBM_SLATE_30M_ENG.value,
+            url=GRANITE_ENDPOINT,
+            apikey=GRANITE_API_KEY,
+            project_id=GRANITE_PROJECT_ID
+        )
+
+    def load_loan_data(self):
         with open(self.json_path, "r") as f:
             data = json.load(f)
 
-        all_texts = []
+        documents = []
         for country, loans in data.items():
             for loan in loans:
-                text = f"{loan['loan_name']} by {loan['bank_name']} in {country}: {loan['eligibility_criteria']}, Amount: {loan['min_amount']}–{loan['max_amount']}"
-                loan["country"] = country  # 🔒 Ensure country is part of metadata
-                self.index_docs.append(loan)
-                all_texts.append(text)
+                content = f"""
+Loan Name: {loan['loan_name']}
+Bank: {loan['bank_name']}
+Country: {country}
+Eligibility: {loan['eligibility_criteria']}
+Amount Range: {loan['min_amount']} – {loan['max_amount']}
+Interest Rate: {loan.get('interest_rate', 'N/A')}
+Tenure: {loan.get('tenure', 'N/A')}
+Collateral Required: {loan.get('collateral_required', 'N/A')}
+Repayment Terms: {loan.get('repayment_terms', 'N/A')}
+                """.strip()
 
-        embeddings = self.model.encode(all_texts, show_progress_bar=True)
-        self.embeddings = np.array(embeddings).astype('float32')
+                metadata = {
+                    "country": country,
+                    "loan_name": loan['loan_name'],
+                    "bank_name": loan['bank_name']
+                }
 
-    def build_index(self):
-        dim = self.embeddings.shape[1]
-        self.index = faiss.IndexFlatL2(dim)
-        self.index.add(self.embeddings)
+                documents.append(Document(page_content=content, metadata=metadata))
 
-    def save_index(self):
-        faiss.write_index(self.index, self.index_path + ".faiss")  # ✅ Standardized to .faiss
-        with open(self.index_path + ".pkl", "wb") as f:            # ✅ Metadata as .pkl
-            pickle.dump(self.index_docs, f)
+        self.docs = documents
 
-    def build_and_save(self):
-        self.load_and_embed()
-        self.build_index()
-        self.save_index()
+    def build_and_persist(self):
+        self.load_loan_data()
+        self.vectorstore = Chroma.from_documents(
+            documents=self.docs,
+            embedding=self.embedder,
+            persist_directory=self.persist_dir
+        )

@@ -28,7 +28,7 @@ class SMBFinancialHealthAnalyzer:
         
         query_text = (
             f"SMB {profile['industry']} companies in {profile['country']} "
-            f"with {profile['employees']} employees and revenue around ${profile['annual_revenue']:,}"
+            f"with {profile['employees']} employees and ${profile['business_model']} business profile"
         )
         
         try:
@@ -141,7 +141,7 @@ Provide a detailed analysis covering:
 Format your response as a professional financial assessment."""
         
         try:
-            ai_analysis = summarize_with_granite(analysis_prompt, temperature=0.6, max_new_tokens=400)
+            ai_analysis = summarize_with_granite(analysis_prompt, temperature=0.3, max_new_tokens=800)
         except Exception as e:
             ai_analysis = f"AI analysis unavailable: {e}"
         
@@ -198,13 +198,13 @@ Provide 5 specific, implementable recommendations that this SMB can execute with
 Focus on the most impactful changes that align with their current capabilities and market position."""
         
         try:
-            return summarize_with_granite(insights_prompt, temperature=0.7, max_new_tokens=500)
+            return summarize_with_granite(insights_prompt, temperature=0.3, max_new_tokens=800)
         except Exception as e:
             return f"Insights unavailable: {e}"
     
     def generate_benchmarking_report(self, profile, score_result, peers):
         """Generate a detailed benchmarking analysis comparing with actual peer metrics"""
-    
+        print("peers :: ", peers)
         def avg(field):
             values = [p[field] for p in peers if isinstance(p.get(field), (int, float))]
             return sum(values) / len(values) if values else 0
@@ -238,14 +238,14 @@ Metrics (Company vs Peers):
 - Recurring Revenue: {profile['recurring_revenue']*100:.1f}% vs {peer_metrics['recurring_revenue']*100:.1f}%
 
 INSTRUCTIONS — Answer all 3 below clearly:
-1. **Underperforming Metrics** — List which metrics are worse than peers  
-2. **Outperforming Metrics** — List which metric(s) are better  
-3. **Top 3 Problems to Fix** — Start each bullet with an *action verb* (e.g. Improve, Reduce, Increase)
+1. *Underperforming Metrics* — List which metrics are worse than peers  
+2. *Outperforming Metrics* — List which metric(s) are better  
+3. *Top 3 Problems to Fix* — Start each bullet with an action verb (e.g. Improve, Reduce, Increase)
 Only return the 3 numbered sections in bullets. Do not repeat values or re-state the company profile.
 """
 
         try:
             #print(benchmark_prompt)
-            return summarize_with_granite(benchmark_prompt, temperature=1.1, max_new_tokens=1200)
+            return summarize_with_granite(benchmark_prompt, temperature=0.3, max_new_tokens=1200)
         except Exception as e:
             return f"Benchmarking analysis unavailable: {e}"

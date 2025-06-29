@@ -80,7 +80,7 @@ def main():
         "--server.port", str(port),
         "--server.headless", "true"
     ]
-    print(f"🔧 Starting Streamlit on http://localhost:{port} ...", flush=True)
+    print(f" Starting Streamlit on http://localhost:{port} ...", flush=True)
     try:
         streamlit_proc = subprocess.Popen(
             streamlit_cmd,
@@ -100,7 +100,7 @@ def main():
         sys.exit(1)
 
     cf_cmd = [CF_BINARY, "tunnel", "--url", f"http://localhost:{port}"]
-    print(f"🌐 Starting Cloudflared tunnel to localhost:{port} ...", flush=True)
+    print(f"Starting Cloudflared tunnel to localhost:{port} ...", flush=True)
     try:
         proc = subprocess.Popen(
             cf_cmd,
@@ -128,7 +128,7 @@ def main():
                 break
             time.sleep(5)
     except KeyboardInterrupt:
-        print("\n🛑 Shutting down tunnel.")
+        print("\n Shutting down tunnel.")
     finally:
         # Cleanup
         if proc and proc.poll() is None:

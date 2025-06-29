@@ -4,7 +4,7 @@ import os
 import requests
 from flask import Blueprint, request, jsonify
 from invoice_reminder.parser import extract_invoice_data
-from invoice_reminder.db_old import save_invoice, flag_for_due_date, update_due_date_and_notify
+from invoice_reminder.db import save_invoice, flag_for_due_date
 from invoice_reminder.whatsapp import send_whatsapp_prompt
 from bson import ObjectId
 from datetime import datetime

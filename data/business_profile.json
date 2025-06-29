@@ -1,8 +1,8 @@
 {
-  "name": "Hi",
-  "country": "India",
-  "industry": "Retail",
+  "name": "American Medical Company",
+  "country": "United States",
+  "industry": "Medical",
   "region": "Urban",
-  "employees": 25,
+  "employees": 55,
   "years": 5
 }

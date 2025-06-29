@@ -1,20 +1,88 @@
 {
-  "United States": {
+ "United States": {
     "currency": "USD",
     "brackets": [
-      { "min_income": 0, "max_income": 11000, "rate": 0.10 },
-      { "min_income": 11001, "max_income": 44725, "rate": 0.12 },
-      { "min_income": 44726, "max_income": 95375, "rate": 0.22 },
-      { "min_income": 95376, "max_income": null, "rate": 0.24 }
+      {
+        "min_income": 0,
+        "max_income": 50000,
+        "rate": 0.10
+      },
+      {
+        "min_income": 50001,
+        "max_income": 75000,
+        "rate": 0.15
+      },
+      {
+        "min_income": 75001,
+        "max_income": 100000,
+        "rate": 0.20
+      },
+      {
+        "min_income": 100001,
+        "max_income": 250000,
+        "rate": 0.24
+      },
+      {
+        "min_income": 250001,
+        "max_income": 500000,
+        "rate": 0.30
+      },
+      {
+        "min_income": 500001,
+        "max_income": null,
+        "rate": 0.34
+      }
     ],
     "deductions": [
-      { "name": "Section 179 Expensing", "max_amount": 1050000 },
-      { "name": "Qualified Business Income Deduction", "percent": 0.20 }
+      {
+        "name": "Section 179 Expensing",
+        "max_amount": 1220000
+      },
+      {
+        "name": "Qualified Business Income Deduction",
+        "percent": 0.20
+      },
+      {
+        "name": "Startup Costs Deduction",
+        "max_amount": 5000
+      },
+      {
+        "name": "Business Meals Deduction",
+        "percent": 0.50
+      },
+      {
+        "name": "Depreciation Deduction",
+        "max_amount": 1000000
+      },
+      {
+        "name": "Home Office Deduction",
+        "max_amount": 1500
+      },
+      {
+        "name": "Self-Employed Health Insurance",
+        "max_amount": null
+      }
     ],
     "subsidies": [
       {
         "name": "SBA 7(a) Loan Subsidy",
         "description": "Interest rate subsidy up to 2.75% for eligible SMBs."
+      },
+      {
+        "name": "Work Opportunity Tax Credit (WOTC)",
+        "description": "Up to $9,600 in credits for hiring from specific disadvantaged groups."
+      },
+      {
+        "name": "R&D Tax Credit",
+        "description": "Credit of up to 14% on qualified R&D expenditures."
+      },
+      {
+        "name": "Disabled Access Credit",
+        "description": "Up to $5,000 in credits for improving physical access to business locations."
+      },
+      {
+        "name": "Energy Efficiency Deduction (179D)",
+        "description": "Up to $5/sqft deduction for energy-efficient buildings or upgrades."
       }
     ]
   },

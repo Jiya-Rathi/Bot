@@ -1,6 +1,6 @@
 # invoice_reminder/scheduler.py (Enhanced Version)
 
-from invoice_reminder.db_old import get_due_invoices, mark_reminder_sent
+from invoice_reminder.db import get_due_invoices, mark_reminder_sent
 from invoice_reminder.whatsapp import send_whatsapp_prompt
 from datetime import datetime, timedelta
 

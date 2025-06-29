@@ -141,12 +141,14 @@ class IntentRouter:
         return {"question": loan_question }
 
     def _extract_tax_params(self, user_input: str) -> Dict[str, Any]:
-        # Load country from persisted business profile
+            # Load country from persisted business profile
         profile = load_profile()
         country = profile.get("country", "United States").title()
     
         profit = self.bot.transactions['Amount'].sum() if not self.bot.transactions.empty else 0.0
-        return {"annual_profit": profit, "country": country}
+        return {"annual_profit": profit, "country": country, "question": user_input}
+    
+        
 
     def _extract_simulation_params(self, user_input: str) -> Dict[str, Any]:
         from cashflow_forecasting.granite_scenario_interpreter import granite_scenario_from_text
@@ -208,34 +210,41 @@ class IntentRouter:
             "with qualified professionals."
         )
 
-    def _tax_estimator_proxy(self, annual_profit: float, country: str) -> str:
-        tax_data = self.bot.tax_estimator.estimate(annual_profit, country)
-        if "error" in tax_data:
-            return f"❌ {tax_data['error']}"
-        return (
-            f"💼 {country} Tax Summary:\n"
-            f"• Net Profit: ${tax_data['annual_net_profit']:,.2f}\n"
-            f"• Tax Owed: ${tax_data['estimated_tax']:,.2f}\n"
-            f"• Granite Tips: {tax_data['granite_breakdown']}"
-        )
+    def _tax_estimator_proxy(self, annual_profit: float, country: str, question: str) -> str:
+            tax_data = self.bot.tax_estimator.estimate(annual_profit, country, question)
+            if "error" in tax_data:
+                return f"❌ {tax_data['error']}"
+            return (
+                f"💼 {country} Tax Summary:\n"
+                f"• Net Profit: ${tax_data['annual_net_profit']:,.2f}\n"
+                f"• Tax Owed: ${tax_data['estimated_tax']:,.2f}\n"
+                f"• Granite Tips: {tax_data['granite_breakdown']}"
+            )
+
 
     def _dashboard_stub(self) -> str:
-        ngrok_url_file = "ngrok_url.txt"
+        print("Dashboard_stub Called")
+        ngrok_url_file = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "ngrok_url.txt"))
         
         # Launch dashboard
-        try:
+        try: 
+            '''
             subprocess.Popen(
                 [sys.executable, "dash_modules/launch_dashboard.py"],
-                stdout=subprocess.DEVNULL,
-                stderr=subprocess.DEVNULL,
+                stdout=open("dashboard_stdout.log", "w"),
+                stderr=open("dashboard_stderr.log", "w"),
                 start_new_session=True
-            )
+                ) 
+            
     
+            print("Subprocess call finished")
             time.sleep(12)  # Increased wait time for proper startup
-    
+            '''
             if os.path.exists(ngrok_url_file):
+                print("Path exsists")
                 with open(ngrok_url_file, 'r') as f:
                     url = f.read().strip()
+                    print("URL:",url)
                     return f"✅ Your accounting dashboard is live at: {url}"
             else:
                 return "⚠️ Dashboard is launching... Try again in 10 seconds."

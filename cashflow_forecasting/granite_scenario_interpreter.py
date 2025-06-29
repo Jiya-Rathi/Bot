@@ -3,50 +3,70 @@ import re
 from datetime import datetime, timedelta
 
 def granite_scenario_from_text(user_input: str, granite_client) -> dict:
-    """
-    Uses Granite LLM to interpret a user's natural language question and convert
-    it into a structured what-if scenario dictionary.
-
-    Example input: "What if we delay salary and purchase new equipment?"
-
-    Output format:
-    {
-        "add_expense": {"date": "2025-07-01", "amount": -2000, "description": "Equipment Purchase"},
-        "delay_income": {"match": "Client A", "days": 15}
-    }
-    """
+    
     prompt = f"""
-You are an assistant helping to simulate cash flow scenarios for a small business.
+You are a smart financial assistant helping a small business simulate cash flow scenarios.
 
-Based on the user input, return ONLY a valid JSON dictionary (not YAML, not text explanation).
+The user will provide a natural language what-if question. First, you will *analyze the intent* of the request — classify whether it's about income or expense, and what kind of transformation is requested (e.g., delay, remove, add).
 
-REQUIRED JSON FORMAT EXAMPLES:
+Then, you will *output a clean JSON dictionary* representing that scenario, suitable for simulation.
 
-For adding expenses (when amount is specified):
-{{"add_expense": {{"date": "2025-07-01", "amount": -2000, "description": "Equipment Purchase"}}}}
+### Examples:
 
-For adding expenses (when amount is NOT specified):
-{{"add_expense": {{"date": "2025-07-01", "description": "Equipment Purchase"}}}}
+USER: "What if I delay payroll by 5 days?"
+THOUGHT:
+- Payroll is an expense.
+- Delaying an expense requires moving its date forward.
+- This maps to a delay_expense action.
 
-For delaying income:
-{{"delay_income": {{"match": "Client A", "days": 15}}}}
+OUTPUT:
+{{
+  "delay_expense": {{
+    "match": "Payroll",
+    "days": 5
+  }}
+}}
 
-For removing expenses:
-{{"remove_expense": {{"match": "Ad Spend"}}}}
+---
 
-CRITICAL RULES:
-- Output must be valid JSON with double quotes around keys and string values
-- Use only these exact keys: "add_expense", "delay_income", "remove_expense"
-- Dates must be in "YYYY-MM-DD" format
-- Only include "amount" if a specific dollar amount is mentioned in the user input
-- Expense amounts must be negative numbers (e.g., -2000, not 2000)
-- Use curly braces {{ }} and double quotes " "
-- No explanation, no text before or after the JSON
-- If the user mentions multiple actions, include multiple keys in the same JSON object
+USER: "What if Client A pays me 10 days late?"
+THOUGHT:
+- Client A is likely a source of income.
+- A 10-day delay in income maps to delay_income.
 
-User input: "{user_input}"
+OUTPUT:
+{{
+  "delay_income": {{
+    "match": "Client A",
+    "days": 10
+  }}
+}}
 
-JSON response:"""
+---
+
+USER: "What if I invest $3000 in a new machine next week?"
+THOUGHT:
+- This is a new outgoing expense.
+- It's a new row in the transaction table.
+- Add as add_expense with a date and amount.
+
+OUTPUT:
+{{
+  "add_expense": {{
+    "date": "2025-07-05",
+    "amount": -3000,
+    "description": "New machine"
+  }}
+}}
+
+---
+
+Now analyze this user input:
+
+USER: "{user_input}"
+
+THOUGHT:
+"""
 
     try:
         # Step 1: Get response from Granite

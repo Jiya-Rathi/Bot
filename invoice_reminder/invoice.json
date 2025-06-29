@@ -1,106 +1,31 @@
 [
   {
-    "invoice_number": "ACS-2025-002",
-    "due_date": "07/17/2025",
-    "party_name": " Harbor Retail Exports",
-    "total_amount": "7575.00",
+    "invoice_number": "INV-FB34DSINC",
+    "invoice_date": "2025-06-17",
+    "due_date": "2025-07-16",
+    "party_name": "Dell Solutions",
+    "total_amount": 2600.0,
+    "invoice_path": "C:\\Storage\\SDSU\\Finny-Financial Bot\\Finny-FinancialBot\\invoice_reminder\\uploads\\whatsapp_+12177219334_20250629075525.pdf",
+    "user_id": "whatsapp:+12177219334",
+    "reminder_sent": false,
+    "status": "pending",
+    "invoice_type": null,
+    "awaiting_type": true,
+    "created_at": "2025-06-29T07:55:44.868669"
+  },
+  {
+    "invoice_number": "RAF-YT33BV",
+    "invoice_date": "2025-06-17",
+    "due_date": "2025-07-01",
+    "party_name": "Raffles Hospital",
+    "total_amount": 21400.0,
+    "invoice_path": "C:\\Storage\\SDSU\\Finny-Financial Bot\\Finny-FinancialBot\\invoice_reminder\\uploads\\whatsapp_+12177219334_20250629075603.pdf",
+    "user_id": "whatsapp:+12177219334",
+    "reminder_sent": false,
     "status": "paid",
-    "awaiting_due": false,
+    "invoice_type": null,
     "awaiting_type": true,
-    "created_at": "2025-06-21T04:11:11.624427",
-    "completed_date": "2025-06-21T04:17:54.756556"
-  },
-  {
-    "invoice_number": "INV202400523_Jan",
-    "due_date": "Feb 4, 2024",
-    "party_name": "SeaTec Europe & Global",
-    "total_amount": "6400",
-    "status": "paid",
-    "awaiting_due": false,
-    "awaiting_type": true,
-    "created_at": "2025-06-21T04:11:16.949357",
-    "completed_date": "2025-06-24T01:22:10.049728"
-  },
-  {
-    "invoice_number": "NP#00183",
-    "due_date": "24.09.2020",
-    "party_name": "Actoonda",
-    "total_amount": "PT285637271",
-    "status": "paid",
-    "awaiting_due": false,
-    "awaiting_type": true,
-    "created_at": "2025-06-21T04:11:22.265395",
-    "completed_date": "2025-06-21T04:27:29.619942"
-  },
-  {
-    "invoice_number": "1213",
-    "due_date": "30 days after receipt",
-    "party_name": "La Galerie",
-    "total_amount": "2809.30",
-    "status": "paid",
-    "awaiting_due": false,
-    "awaiting_type": true,
-    "created_at": "2025-06-21T04:11:28.107954",
-    "completed_date": "2025-06-23T04:15:21.766342"
-  },
-  {
-    "invoice_number": "0012 820",
-    "due_date": "27.09.2019",
-    "party_name": "ConIncorporated",
-    "total_amount": "5261.2",
-    "status": "pending",
-    "awaiting_due": false,
-    "awaiting_type": true,
-    "created_at": "2025-06-21T04:11:33.109694"
-  },
-  {
-    "invoice_number": "BPXINV-00550",
-    "due_date": "30.05.2021",
-    "party_name": "Bioplex",
-    "total_amount": "6611.40",
-    "status": "pending",
-    "awaiting_due": false,
-    "awaiting_type": true,
-    "created_at": "2025-06-21T04:11:39.373957"
-  },
-  {
-    "invoice_number": "4235",
-    "due_date": "November 12, 2021",
-    "party_name": "Obacht AG",
-    "total_amount": "213470",
-    "status": "pending",
-    "awaiting_due": false,
-    "awaiting_type": true,
-    "created_at": "2025-06-21T04:11:44.214002"
-  },
-  {
-    "invoice_number": "MPA-CUI-CY2025-000051",
-    "due_date": "01 July 2025",
-    "party_name": "Maritime and Port Authority of Singapore",
-    "total_amount": "SGD 2,016.50",
-    "status": "pending",
-    "awaiting_due": false,
-    "awaiting_type": true,
-    "created_at": "2025-06-23T03:37:51.186747"
-  },
-  {
-    "invoice_number": "TG2402-1410",
-    "due_date": "Mar. 15, 2024",
-    "party_name": "Alphard Offshore Pte Ltd",
-    "total_amount": 12500,
-    "status": "pending",
-    "awaiting_due": false,
-    "awaiting_type": true,
-    "created_at": "2025-06-23T03:37:56.260879"
-  },
-  {
-    "invoice_number": "24/0002MI",
-    "due_date": "05 July 2025",
-    "party_name": "Alphard Offshore Pte Ltd",
-    "total_amount": "SGD 3456.00",
-    "status": "pending",
-    "awaiting_due": false,
-    "awaiting_type": true,
-    "created_at": "2025-06-23T03:38:01.440417"
+    "created_at": "2025-06-29T07:56:26.764521",
+    "completed_date": "2025-06-29T08:01:11.005774"
   }
 ]

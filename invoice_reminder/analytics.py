@@ -1,67 +1,76 @@
-# invoice_reminder/analytics.py (Enhanced Version)
-
 import re
 from datetime import datetime
-from invoice_reminder.db import invoices
+from invoice_reminder.db import load_all_invoices
 
-def parse_amount(amount_str):
-    """Parse amount string to float, handling various formats"""
-    if amount_str is None:
+def parse_amount(amount):
+    """Parse amount string or number to float"""
+    if amount is None:
         return 0.0
-    
-    if isinstance(amount_str, (int, float)):
-        return float(amount_str)
-    
-    if isinstance(amount_str, str):
-        # Remove currency symbols, commas, and extra spaces
-        cleaned = re.sub(r'[₹$€£,\s]', '', amount_str)
-        # Extract numbers (including decimals)
-        numbers = re.findall(r'\d+\.?\d*', cleaned)
-        if numbers:
-            return float(numbers[0])
-    
+
+    if isinstance(amount, (int, float)):
+        return float(amount)
+
+    if isinstance(amount, str):
+        cleaned = re.sub(r'[₹$€£,\s]', '', amount)
+        try:
+            return float(cleaned)
+        except ValueError:
+            return 0.0
+
     return 0.0
 
 def get_monthly_summary(user_id: str) -> dict:
-    """Get comprehensive monthly summary of invoices"""
+    """Generate a summary of invoice data for the current month"""
     now = datetime.now()
-    month_start = now.replace(day=1).strftime("%Y-%m-%d")
+    month_start = now.replace(day=1)
+    invoices = load_all_invoices()
+
+    def is_in_month(date_str):
+        try:
+            date = datetime.fromisoformat(date_str)
+            return date >= month_start
+        except Exception:
+            return False
 
     # Unpaid invoices to pay
-    pay_due_invoices = invoices.find({
-        "user_id": user_id,
-        "invoice_type": "pay",
-        "status": "pending",
-        "due_date": {"$gte": month_start}
-    })
-    pay_due = sum(parse_amount(i.get("total_amount")) for i in pay_due_invoices)
+    pay_due = sum(
+        parse_amount(i.get("total_amount"))
+        for i in invoices
+        if i.get("user_id") == user_id
+        and i.get("invoice_type") == "pay"
+        and i.get("status", "pending") == "pending"
+        and is_in_month(i.get("due_date", ""))
+    )
 
-    # Uncollected invoices
-    collect_due_invoices = invoices.find({
-        "user_id": user_id,
-        "invoice_type": "collect", 
-        "status": "pending",
-        "due_date": {"$gte": month_start}
-    })
-    collect_due = sum(parse_amount(i.get("total_amount")) for i in collect_due_invoices)
+    # Uncollected invoices to collect
+    collect_due = sum(
+        parse_amount(i.get("total_amount"))
+        for i in invoices
+        if i.get("user_id") == user_id
+        and i.get("invoice_type") == "collect"
+        and i.get("status", "pending") == "pending"
+        and is_in_month(i.get("due_date", ""))
+    )
 
     # Paid invoices this month
-    paid_invoices = invoices.find({
-        "user_id": user_id,
-        "invoice_type": "pay",
-        "status": "paid",
-        "due_date": {"$gte": month_start}
-    })
-    paid_total = sum(parse_amount(i.get("total_amount")) for i in paid_invoices)
+    paid_total = sum(
+        parse_amount(i.get("total_amount"))
+        for i in invoices
+        if i.get("user_id") == user_id
+        and i.get("invoice_type") == "pay"
+        and i.get("status") == "paid"
+        and is_in_month(i.get("completed_date", ""))
+    )
 
-    # Collected invoices this month  
-    collected_invoices = invoices.find({
-        "user_id": user_id,
-        "invoice_type": "collect",
-        "status": "collected", 
-        "due_date": {"$gte": month_start}
-    })
-    collected_total = sum(parse_amount(i.get("total_amount")) for i in collected_invoices)
+    # Collected invoices this month
+    collected_total = sum(
+        parse_amount(i.get("total_amount"))
+        for i in invoices
+        if i.get("user_id") == user_id
+        and i.get("invoice_type") == "collect"
+        and i.get("status") == "collected"
+        and is_in_month(i.get("completed_date", ""))
+    )
 
     return {
         "pay_due": pay_due,

@@ -9,15 +9,18 @@ from transformers import (
     TrainingArguments,
     set_seed
 )
- 
+
 from tsfm_public import TimeSeriesPreprocessor
 from config.settings import HUGGING_FACE_TOKEN
+from utils.granite import summarize_with_granite
 
 set_seed(42)
+
 from huggingface_hub import login
 import os
 
 login(token=HUGGING_FACE_TOKEN)
+
 
 class CashFlowForecaster:
     def __init__(self, context_length: int = 128, forecast_length: int = 30):
@@ -25,41 +28,35 @@ class CashFlowForecaster:
         self.forecast_length = forecast_length
 
         # ✅ Load pretrained IBM PatchTSMixer model (CPU only)
-        
-
         self.config = PatchTSTConfig(
-            do_mask_input=False,               # no masking, full input
-            context_length=128,               # your actual input window (past 128 days)
-            patch_length=8,                   # divide into 16 segments (128 / 8)
-            num_input_channels=1,             # only "cashflow"
-            patch_stride=8,                   # non-overlapping patches
-            prediction_length=30,            # forecast next 30 days
-        
-            # Transformer core
-            d_model=64,                       # keep small to avoid overfitting (original was 128)
-            num_attention_heads=4,           # lower head count for smaller d_model
-            num_hidden_layers=2,             # 2–3 layers work better for small datasets
-            ffn_dim=256,                      # smaller feedforward dimension
-            dropout=0.15,                     # moderate dropout for regularization
+            do_mask_input=False,
+            context_length=128,
+            patch_length=8,
+            num_input_channels=1,
+            patch_stride=8,
+            prediction_length=30,
+            d_model=64,
+            num_attention_heads=4,
+            num_hidden_layers=2,
+            ffn_dim=256,
+            dropout=0.15,
             head_dropout=0.1,
-        
-            # Normalization + attention
             pooling_type=None,
-            channel_attention=False,         # cashflow is single-channel
-            scaling="std",                   # standard scaling is fine
-            loss="mse",                      # default for regression
+            channel_attention=False,
+            scaling="std",
+            loss="mse",
             pre_norm=True,
-            norm_type="batchnorm",           # batchnorm more stable for small datasets
+            norm_type="batchnorm",
         )
 
         self.model = PatchTSTForPrediction(config=self.config)
 
     def forecast(self, raw_df: pd.DataFrame, days: int = 30) -> pd.DataFrame:
-        df = raw_df[['Date','Credit','Debit']].copy()
+        df = raw_df[['Date', 'Credit', 'Debit']].copy()
         df['Date'] = pd.to_datetime(df['Date'], format='%d-%b-%y', errors='coerce')
         df = df.dropna(subset=['Date'])
         df['cashflow'] = pd.to_numeric(df['Credit'], errors='coerce').fillna(0) - pd.to_numeric(df['Debit'], errors='coerce').fillna(0)
-        df = df.groupby('Date').agg({'cashflow':'sum'}).reset_index().rename(columns={'Date':'date'})
+        df = df.groupby('Date').agg({'cashflow': 'sum'}).reset_index().rename(columns={'Date': 'date'})
         df = df.sort_values('date')
         df['cashflow'] = df['cashflow'].interpolate()
 
@@ -88,17 +85,26 @@ class CashFlowForecaster:
         with torch.no_grad():
             output = self.model(past_values=tensor).prediction_outputs.cpu()
 
-        # ✅ Inverse transform manually (since tsp.inverse_transform not public)
-        #print("tsp :: ", tsp)
         scaler = tsp.target_scaler_dict["0"]
         yhat_real = scaler.inverse_transform(output.squeeze().numpy().reshape(-1, 1)).flatten()
 
         forecast_dates = pd.date_range(context['date'].iloc[-1] + pd.Timedelta(days=1), periods=days)
-
-        return pd.DataFrame({
+        df = pd.DataFrame({
             "ds": forecast_dates,
             "yhat": yhat_real
         })
+
+        return df
+
+    def forecast_summary(self, raw_df: pd.DataFrame, days: int = 30) -> dict:
+        df = self.forecast(raw_df, days)
+        summary = {
+            "min": round(df['yhat'].min(), 2),
+            "max": round(df['yhat'].max(), 2),
+            "mean": round(df['yhat'].mean(), 2),
+            "neg": int((df['yhat'] < 0).sum())
+        }
+        return summary
 
 
 class ForecastExplainer:
@@ -120,7 +126,8 @@ class ForecastExplainer:
             f"- Avg: ${summary['mean']}\n- Days negative: {summary['neg']}\n\n"
             f"Provide 2–4 sentence financial advice."
         )
-        return self.granite_client.generate_text(prompt).strip()
+        print("We came here", prompt)
+        return summarize_with_granite(prompt, temperature=0.3, max_new_tokens=750)
 
 
 if __name__ == "__main__":

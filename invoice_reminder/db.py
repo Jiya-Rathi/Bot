@@ -3,17 +3,11 @@
 import json
 from datetime import datetime, timedelta
 from pathlib import Path
-from pymongo import MongoClient
-from bson import ObjectId
 from invoice_reminder.whatsapp import send_whatsapp_prompt
 
 INVOICE_PATH = Path("invoice_reminder/invoice.json")
 
 # ─── HELPERS ─────────────────────────────
-
-client = MongoClient("mongodb://localhost:27017/")
-db = client["finny"]
-invoices = db["invoices"]
 
 def load_all_invoices():
     if not INVOICE_PATH.exists():

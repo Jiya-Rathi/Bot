@@ -63,8 +63,15 @@ def explain_top_customers(customers):
 
 def render_top_entities(title, data):
     st.subheader(title)
-    for row in data:
-        st.write(f"{row['source']}: ${row['amount']:,}")
+    if not data:
+        st.write("No data available.")
+        return
+
+    import pandas as pd
+    df = pd.DataFrame(data)
+    df["amount"] = df["amount"].map("${:,.2f}".format)  # format with $ and commas
+    df.rename(columns={"source": "Source", "amount": "Amount"}, inplace=True)
+    st.table(df)  # or use st.dataframe(df) for interactive version
 
 def render_analysis():
     st.title("📊 Analytics")

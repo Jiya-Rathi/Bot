@@ -78,10 +78,11 @@ class FinancialBot:
                 raw = json.load(f)
     
             df = pd.DataFrame(raw["history"])
-    
+            
             df['Date'] = pd.to_datetime(df['date'], errors='coerce')
             df['Amount'] = pd.to_numeric(df['amount'], errors='coerce')
-    
+            df["credit"] = df.apply(lambda row: row["amount"] if row["type"] == "credit" else 0, axis=1)
+            df["debit"] = df.apply(lambda row: row["amount"] if row["type"] == "debit" else 0, axis=1)
             # Debit amounts are negative
             df['Amount'] = df.apply(
                 lambda row: -row['Amount'] if row.get('type', '').lower() == 'debit' else row['Amount'],
@@ -91,6 +92,7 @@ class FinancialBot:
             df['Description'] = df['desc'].astype(str).str.strip()
             df = df[abs(df['Amount']) > 0.01].copy()
     
+            df = df.rename(columns={"credit": "Credit", "debit": "Debit"})
             self.transactions = df
             print(f"✅ Loaded {len(df)} transactions from JSON.")
             return True
@@ -114,7 +116,7 @@ class FinancialBot:
         return self.cash_flow_forecaster.forecast(self.transactions)
 
     def loan_advice(self, question: str) -> str:
-        return self.loan_advisor.answer_loan_question(self.granite_client, question)
+        return self.loan_advisor.answer_loan_question(question)
 
     def score_financials(self) -> dict:
             business_profile = load_profile()
@@ -134,10 +136,11 @@ class FinancialBot:
         return self.forecast_explainer.explain_forecast(forecast_df, days)
     
     def simulate_and_explain(self, scenario: dict) -> str:
+        print("Scene:",scenario)
         from cashflow_forecasting.scenario_manager import apply_scenario
-        adjusted_df = apply_scenario(self.transactions, scenario)
-        forecast_df = self.cash_flow_forecaster.forecast(adjusted_df)
-        return self.forecast_explainer.explain_forecast(forecast_df)
+        forecast_df = self.cash_flow_forecaster.forecast(self.transactions, 30)
+        adjusted_df = apply_scenario(forecast_df, scenario)
+        return self.forecast_explainer.explain_forecast(adjusted_df,30)
 
 
     def run_full_analysis(self, json_path: str):
@@ -196,24 +199,35 @@ class FinancialBot:
         # 7) Financial health score + commentary
         score_data = self.score_financials()
         print(f"\n🏅 Financial Health Score: {score_data['score']}/100")
-        print(f"🗒️ Commentary:\n{score_data['commentary']}")
+        print(f"🗒 Commentary:\n{score_data['commentary']}")
+    
     
     def forecast_summary(self, days: int = 30) -> str:
         print("✅ forecast_summary method called")
-        forecast_df = self.cash_flow_forecaster.forecast(self.transactions, days)
-        low_cash_days = forecast_df[forecast_df['yhat'] < 0]
+        print(self.transactions)
 
-        if not low_cash_days.empty:
-            warning_day = low_cash_days.iloc[0]
-            warning_date = pd.to_datetime(warning_day['ds'])  # make sure it's datetime
+        forecast_df = self.cash_flow_forecaster.forecast_summary(self.transactions, days)
+
+        neg_days = forecast_df.get("neg", 0)
+
+        if neg_days > 0:
             return (
-                f"📉 *Cash Flow Alert!*\n"
-                f"On *{warning_date.strftime('%b %d, %Y')}*, your projected balance "
-                f"may dip to ${warning_day['yhat']:.2f}.\n"
-                f"💡 Consider cutting expenses or delaying non-essential payments."
+                f"📉 Cash Flow Alert!\n"
+                f"Your forecast shows {neg_days} day(s) with negative projected balance in the next {days} days.\n"
+                f"💡 Consider cutting expenses or delaying non-essential payments.\n\n"
+                f"📊 Forecast Summary:\n"
+                f"- Min: ${forecast_df['min']}\n"
+                f"- Max: ${forecast_df['max']}\n"
+                f"- Avg: ${forecast_df['mean']}"
             )
 
-        return "✅ Your cash flow looks healthy for the next 30 days!"
+        return (
+            f"✅ Your cash flow looks healthy for the next {days} days!\n\n"
+            f"📊 Forecast Summary:\n"
+            f"- Min: ${forecast_df['min']}\n"
+            f"- Max: ${forecast_df['max']}\n"
+            f"- Avg: ${forecast_df['mean']}"
+        )
 
 
 

@@ -1,7 +1,7 @@
 # message_router.py (Fixed Net Position Calculation)
 
 import re
-from invoice_reminder.db_old import (update_due_date, mark_as_done, update_due_date_by_id, 
+from invoice_reminder.db import (update_due_date, mark_as_done, update_due_date_by_id, 
                                set_invoice_type, update_due_date_and_notify)
 from invoice_reminder.analytics import get_monthly_summary
 from invoice_reminder.whatsapp import send_whatsapp_prompt
