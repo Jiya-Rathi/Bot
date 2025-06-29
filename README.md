@@ -1,1 +1,1 @@
-# Finny-FinancialBot
+# F
