@@ -2,6 +2,8 @@
 
 A smart WhatsApp-based assistant that helps small and medium-sized businesses (SMBs) automate invoice tracking, reminders, forecasting, credit advice, and tax estimation. Built with IBM Watsonx, Granite LLM, and Twilio, the bot offers a conversational interface with AI-powered decision support and automation.
 
+> **📌 Note:** The most recent development work is in the `invoice_integration` branch.
+
 ---
 
 ## ✨ Features
@@ -52,4 +54,3 @@ Have an idea or found a bug? Feel free to open an [issue](https://github.com/you
 ## 📄 License
 
 MIT License
-
